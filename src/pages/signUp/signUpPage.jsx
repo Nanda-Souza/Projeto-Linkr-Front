@@ -1,7 +1,100 @@
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import apiAuth from "../../services/apiAuth";
+import {
+  ButtonStyled,
+  FormStyled,
+  InputStyled,
+  LinkStyled,
+  SignUpDiv,
+} from "./signUpPageStyled";
+
 export default function SignUpPage() {
+  const [form, setForm] = useState({
+    username: "",
+    email: "",
+    avatar: "",
+    password: "",
+    confirmPassword: "",
+  });
+  const navigate = useNavigate();
+
+  function submitForm(event) {
+    event.preventDefault();
+
+    if (form.password !== form.confirmPassword) {
+      alert("As senhas não conferem!");
+      return;
+    }
+
+    apiAuth
+      .singUp(form, {
+        headers: {
+          Typeuser: "user",
+        },
+      })
+      .then((response) => {
+        if (response.status === 201) {
+          alert("Cadastro realizado com sucesso!");
+          navigate("/login");
+        } else {
+          alert("Erro ao cadastrar!");
+        }
+      })
+      .catch((err) => err.response.data.forEach((erro) => alert(erro)));
+  }
+
+  function editForm(e) {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  }
+
   return (
-    <div>
-      <h1>Sign Up Page</h1>
-    </div>
+    <SignUpDiv>
+      <FormStyled onSubmit={submitForm}>
+        <InputStyled
+          name="username"
+          value={form.username}
+          required
+          type="text"
+          placeholder="Username"
+          onChange={editForm}
+        />
+        <InputStyled
+          name="email"
+          value={form.email}
+          required
+          type="email"
+          placeholder="E-mail"
+          onChange={editForm}
+        />
+        <InputStyled
+          name="avatar"
+          value={form.avatar}
+          required
+          type="url"
+          placeholder="Picture Url"
+          onChange={editForm}
+        />
+        <InputStyled
+          name="password"
+          value={form.password}
+          required
+          type="password"
+          placeholder="Password"
+          onChange={editForm}
+        />
+        <InputStyled
+          name="confirmPassword"
+          value={form.confirmPassword}
+          required
+          type="password"
+          placeholder="Confirm password"
+          onChange={editForm}
+        />
+        <ButtonStyled onClick={submitForm}>Sign Up</ButtonStyled>
+      </FormStyled>
+
+      <LinkStyled to="/sign-in">Switch back to log in</LinkStyled>
+    </SignUpDiv>
   );
 }
