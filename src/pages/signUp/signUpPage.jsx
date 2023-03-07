@@ -11,9 +11,9 @@ import {
 
 export default function SignUpPage() {
   const [form, setForm] = useState({
-    username: "",
+    name: "",
     email: "",
-    avatar: "",
+    img_url: "",
     password: "",
     confirmPassword: "",
   });
@@ -28,20 +28,16 @@ export default function SignUpPage() {
     }
 
     apiAuth
-      .singUp(form, {
-        headers: {
-          Typeuser: "user",
-        },
-      })
+      .singUp(form)
       .then((response) => {
         if (response.status === 201) {
           alert("Cadastro realizado com sucesso!");
-          navigate("/login");
+          navigate("/");
         } else {
           alert("Erro ao cadastrar!");
         }
       })
-      .catch((err) => err.response.data.forEach((erro) => alert(erro)));
+      .catch((error) => console.log(error));
   }
 
   function editForm(e) {
@@ -52,8 +48,8 @@ export default function SignUpPage() {
     <SignUpDiv>
       <FormStyled onSubmit={submitForm}>
         <InputStyled
-          name="username"
-          value={form.username}
+          name="name"
+          value={form.name}
           required
           type="text"
           placeholder="Username"
@@ -68,8 +64,8 @@ export default function SignUpPage() {
           onChange={editForm}
         />
         <InputStyled
-          name="avatar"
-          value={form.avatar}
+          name="img_url"
+          value={form.img_url}
           required
           type="url"
           placeholder="Picture Url"
