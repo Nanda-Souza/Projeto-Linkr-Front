@@ -11,9 +11,9 @@ import {
 
 export default function SignUpPage() {
   const [form, setForm] = useState({
-    username: "",
+    name: "",
     email: "",
-    avatar: "",
+    img_url: "",
     password: "",
     confirmPassword: "",
   });
@@ -53,7 +53,7 @@ export default function SignUpPage() {
       <FormStyled onSubmit={submitForm}>
         <InputStyled
           name="username"
-          value={form.username}
+          value={form.name}
           required
           type="text"
           placeholder="Username"
