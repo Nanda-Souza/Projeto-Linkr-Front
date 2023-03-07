@@ -52,7 +52,7 @@ export default function SignUpPage() {
     <SignUpDiv>
       <FormStyled onSubmit={submitForm}>
         <InputStyled
-          name="username"
+          name="name"
           value={form.name}
           required
           type="text"
@@ -68,8 +68,8 @@ export default function SignUpPage() {
           onChange={editForm}
         />
         <InputStyled
-          name="avatar"
-          value={form.avatar}
+          name="img_url"
+          value={form.img_url}
           required
           type="url"
           placeholder="Picture Url"
