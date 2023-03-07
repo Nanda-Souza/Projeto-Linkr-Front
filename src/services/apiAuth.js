@@ -2,9 +2,9 @@ import axios from "axios";
 
 const BASE_URL = process.env.REACT_APP_API_URL;
 
-function singUp(body, config) {
+function singUp(body) {
   console.log("url: " + BASE_URL);
-  return axios.post(`${BASE_URL}/sign-up`, body, config);
+  return axios.post(`${BASE_URL}/sign-up`, body);
 }
 
 function signIn(body) {

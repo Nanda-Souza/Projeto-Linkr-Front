@@ -28,20 +28,16 @@ export default function SignUpPage() {
     }
 
     apiAuth
-      .singUp(form, {
-        headers: {
-          Typeuser: "user",
-        },
-      })
+      .singUp(form)
       .then((response) => {
         if (response.status === 201) {
           alert("Cadastro realizado com sucesso!");
-          navigate("/login");
+          navigate("/");
         } else {
           alert("Erro ao cadastrar!");
         }
       })
-      .catch((err) => err.response.data.forEach((erro) => alert(erro)));
+      .catch((error) => console.log(error));
   }
 
   function editForm(e) {
