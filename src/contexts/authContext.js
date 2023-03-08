@@ -11,21 +11,7 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
-  console.log("entrei no provider");
-
-  useEffect(() => {
-    const recoveredUser = localStorage.getItem("user");
-    const recoveredToken = localStorage.getItem("tokenUser");
-
-    if (recoveredUser && recoveredToken) {
-      setUser(JSON.parse(recoveredUser));
-      setToken(JSON.parse(recoveredToken));
-    }
-
-    setLoading(false);
-  }, []);
-
-  const login = (data) => {
+  function login(data) {
     const { token } = data;
 
     apiAuth
@@ -36,7 +22,7 @@ export const AuthProvider = ({ children }) => {
         localStorage.setItem("user", JSON.stringify(loggedUser));
         localStorage.setItem("tokenUser", JSON.stringify(token));
 
-        console.log("token: ", token, "user: ", loggedUser);
+        console.log(loggedUser);
 
         setUser(loggedUser);
         setToken(token);
@@ -45,7 +31,7 @@ export const AuthProvider = ({ children }) => {
       .catch((err) => {
         console.log(err);
       });
-  };
+  }
 
   const logout = () => {
     console.log("Você saiu!");
@@ -55,6 +41,19 @@ export const AuthProvider = ({ children }) => {
     setToken(null);
     navigate("/");
   };
+
+  useEffect(() => {
+    const recoveredUser = localStorage.getItem("user");
+    const recoveredToken = localStorage.getItem("tokenUser");
+
+    if (recoveredUser && recoveredToken) {
+      setUser(JSON.parse(recoveredUser));
+      setToken(JSON.parse(recoveredToken));
+      login({ token: JSON.parse(recoveredToken) });
+    }
+
+    setLoading(false);
+  }, []);
 
   return (
     <AuthContext.Provider
