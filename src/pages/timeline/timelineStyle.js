@@ -1,39 +1,5 @@
 import styled from "styled-components";
 
-export const Header = styled.div`
-  width: 100%;
-  height: 72px;
-  background-color: #151515;
-  display: flex;
-  justify-content: space-between;
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-
-  img {
-    margin-top: 17px;
-    margin-left: 20px;
-    width: 100px;
-    height: 30px;
-  }
-  div {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 20px;
-  }
-  .menu {
-    width: 20px;
-    height: 15px;
-  }
-  .profile_picture {
-    margin-right: 20px;
-    width: 40px;
-    height: 40px;
-    border-radius: 20px;
-  }
-`;
 export const Timeline = styled.div`
   margin-top: 100px;
   display: flex;
@@ -44,6 +10,10 @@ export const Timeline = styled.div`
     width: 110px;
     height: 30px;
     margin-left: 15px;
+  }
+  @media (max-width: 600px) {
+    margin-left: 0px;
+    margin-right: 0px;
   }
 `;
 
@@ -57,7 +27,7 @@ export const BoxCreatePost = styled.div`
   div {
     display: flex;
     align-items: center;
-    img {
+    .profile_picture {
       width: 40px;
       height: 40px;
       border-radius: 50%;
@@ -73,7 +43,24 @@ export const BoxCreatePost = styled.div`
       color: #707070;
     }
   }
+  @media (max-width: 600px) {
+    border-radius: 0px;
+    width: 100%;
+    div {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      p {
+        margin-bottom: 5px;
+      }
+    }
+
+    .profile_picture {
+      display: none;
+    }
+  }
 `;
+
 export const Form = styled.form`
   display: flex;
   flex-direction: column;
@@ -110,6 +97,17 @@ export const Form = styled.form`
     font-size: 14px;
     color: #ffffff;
   }
+  @media (max-width: 600px) {
+    align-items: center;
+    justify-content: center;
+    input {
+      margin: 0;
+      width: 95%;
+    }
+    button {
+      margin-left: 67%;
+    }
+  }
 `;
 
 export const PostsList = styled.ul`
@@ -125,10 +123,10 @@ export const Post = styled.li`
   width: 611px;
   height: 276px;
   background-color: #171717;
-  div {
+  .info {
     display: flex;
     align-items: center;
-    img {
+    .profile_picture_post {
       width: 40px;
       height: 40px;
       border-radius: 50%;
@@ -153,6 +151,14 @@ export const Post = styled.li`
     font-size: 17px;
     color: #ffffff;
   }
+  @media (max-width: 600px) {
+    border-radius: 0px;
+    width: 100%;
+    .info {
+      margin: 0;
+      justify-content: flex-start;
+    }
+  }
 `;
 
 export const LinkPost = styled.div`
@@ -171,7 +177,26 @@ export const LinkPost = styled.div`
     border-radius: 0px 10px 10px 0px;
   }
   .link_details {
-    display: flex;
-    flex-direction: column;
+    display: block;
+    font-family: "Lato";
+    font-style: normal;
+    font-weight: 400;
+    color: #cecece;
+    h1 {
+      font-size: 16px;
+    }
+    h2 {
+      font-size: 13px;
+    }
+    h3 {
+      font-size: 11px;
+    }
+  }
+  @media (max-width: 600px) {
+    border-radius: 14px;
+    width: 80%;
+    .link_details {
+      width: 80%;
+    }
   }
 `;
