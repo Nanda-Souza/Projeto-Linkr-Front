@@ -1,6 +1,7 @@
 import { createContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
+import apiAuth from "../services/apiAuth";
 
 export const AuthContext = createContext();
 
@@ -10,30 +11,27 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const recoveredUser = localStorage.getItem("user");
-    const recoveredToken = localStorage.getItem("tokenUser");
+  function login(data) {
+    const { token } = data;
 
-    if (recoveredUser && recoveredToken) {
-      setUser(JSON.parse(recoveredUser));
-      setToken(JSON.parse(recoveredToken));
-    }
+    apiAuth
+      .getUser(token)
+      .then((res) => {
+        const loggedUser = res.data;
 
-    setLoading(false);
-  }, []);
+        localStorage.setItem("user", JSON.stringify(loggedUser));
+        localStorage.setItem("tokenUser", JSON.stringify(token));
 
-  const login = (data) => {
-    const loggedUser = data;
-    const token = data.token;
-    delete loggedUser.token;
+        console.log(loggedUser);
 
-    localStorage.setItem("user", JSON.stringify(loggedUser));
-    localStorage.setItem("tokenUser", JSON.stringify(token));
-
-    setUser(loggedUser);
-    setToken(token);
-    navigate("/");
-  };
+        setUser(loggedUser);
+        setToken(token);
+        navigate("/timeline");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
 
   const logout = () => {
     console.log("Você saiu!");
@@ -43,6 +41,19 @@ export const AuthProvider = ({ children }) => {
     setToken(null);
     navigate("/");
   };
+
+  useEffect(() => {
+    const recoveredUser = localStorage.getItem("user");
+    const recoveredToken = localStorage.getItem("tokenUser");
+
+    if (recoveredUser && recoveredToken) {
+      setUser(JSON.parse(recoveredUser));
+      setToken(JSON.parse(recoveredToken));
+      login({ token: JSON.parse(recoveredToken) });
+    }
+
+    setLoading(false);
+  }, []);
 
   return (
     <AuthContext.Provider
