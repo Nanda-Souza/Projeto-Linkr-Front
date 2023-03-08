@@ -56,7 +56,7 @@ export default function SignInPage() {
         <ButtonStyled>Entrar</ButtonStyled>
       </FormStyled>
 
-      <LinkStyled to="/cadastrar">Primeira vez? Cadastre-se!</LinkStyled>
+      <LinkStyled to="/sign-up">Primeira vez? Cadastre-se!</LinkStyled>
     </SignInDiv>
   );
 }
