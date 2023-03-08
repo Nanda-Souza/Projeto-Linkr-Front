@@ -8,7 +8,6 @@ export const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [token, setToken] = useState(null);
-  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
   function login(data) {
@@ -22,14 +21,15 @@ export const AuthProvider = ({ children }) => {
         localStorage.setItem("user", JSON.stringify(loggedUser));
         localStorage.setItem("tokenUser", JSON.stringify(token));
 
-        console.log(loggedUser);
-
         setUser(loggedUser);
         setToken(token);
         navigate("/timeline");
       })
       .catch((err) => {
-        console.log(err);
+        if (err.response.status === 401) {
+          console.log("Unauthorized");
+          navigate("/");
+        }
       });
   }
 
@@ -51,8 +51,6 @@ export const AuthProvider = ({ children }) => {
       setToken(JSON.parse(recoveredToken));
       login({ token: JSON.parse(recoveredToken) });
     }
-
-    setLoading(false);
   }, []);
 
   return (
@@ -62,7 +60,6 @@ export const AuthProvider = ({ children }) => {
         user,
         token,
         login,
-        loading,
         logout,
       }}
     >
