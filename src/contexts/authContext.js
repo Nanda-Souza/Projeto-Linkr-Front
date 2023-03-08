@@ -32,7 +32,7 @@ export const AuthProvider = ({ children }) => {
 
     setUser(loggedUser);
     setToken(token);
-    navigate("/");
+    navigate("/timeline");
   };
 
   const logout = () => {

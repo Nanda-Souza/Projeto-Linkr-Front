@@ -12,17 +12,21 @@ import menu_vector from "../../assets/Vector (2).png";
 import profile from "../../assets/image 3.png";
 import timeline from "../../assets/timeline.png";
 import img_link from "../../assets/image 4.png"
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router";
 import axios from "axios";
+import { AuthContext } from "../../contexts/authContext";
 
 export default function TimelinePage() {
+    const {user} = useContext(AuthContext)
     const navigate = useNavigate();
     const [button, setButton] = useState("Publish")
     const [loading, setLoading] = useState(false)
     const [url, setUrl] = useState("")
     const [description, setDescription] = useState("")
     const [posts, setPosts] = useState(undefined)
+
+    console.log(user)
 
     function createPost(e){
         e.preventDefault();
