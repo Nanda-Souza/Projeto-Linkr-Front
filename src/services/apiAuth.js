@@ -11,9 +11,18 @@ function signIn(body) {
   return axios.post(`${BASE_URL}/sign-in`, body);
 }
 
+function getUser(token) {
+  return axios.get(`${BASE_URL}/users/me`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+}
+
 const apiAuth = {
   singUp,
   signIn,
+  getUser,
 };
 
 export default apiAuth;

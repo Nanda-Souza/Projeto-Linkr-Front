@@ -1,6 +1,7 @@
 import { createContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
+import apiAuth from "../services/apiAuth";
 
 export const AuthContext = createContext();
 
@@ -9,6 +10,8 @@ export const AuthProvider = ({ children }) => {
   const [token, setToken] = useState(null);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
+
+  console.log("entrei no provider");
 
   useEffect(() => {
     const recoveredUser = localStorage.getItem("user");
@@ -23,16 +26,25 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   const login = (data) => {
-    const loggedUser = data;
-    const token = data.token;
-    delete loggedUser.token;
+    const { token } = data;
 
-    localStorage.setItem("user", JSON.stringify(loggedUser));
-    localStorage.setItem("tokenUser", JSON.stringify(token));
+    apiAuth
+      .getUser(token)
+      .then((res) => {
+        const loggedUser = res.data;
 
-    setUser(loggedUser);
-    setToken(token);
-    navigate("/");
+        localStorage.setItem("user", JSON.stringify(loggedUser));
+        localStorage.setItem("tokenUser", JSON.stringify(token));
+
+        console.log("token: ", token, "user: ", loggedUser);
+
+        setUser(loggedUser);
+        setToken(token);
+        navigate("/timeline");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   const logout = () => {
