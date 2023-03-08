@@ -16,19 +16,25 @@ export default function SignInPage() {
     password: "",
   });
 
-  const handleSubmit = (e) => {
+  function handleSubmit(e) {
     e.preventDefault();
+
+    if (!body.email || !body.password) {
+      alert("You must fill all the fields!");
+      return;
+    }
+
     apiAuth
       .signIn(body)
       .then((res) => {
-        console.log("Logado com sucesso!");
-        console.log(res.data);
         login(res.data);
       })
       .catch((err) => {
-        console.log(err);
+        if (err.response.status === 401) {
+          alert("Invalid credentials");
+        }
       });
-  };
+  }
 
   function editBody(e) {
     setBody({ ...body, [e.target.name]: e.target.value });
@@ -40,7 +46,6 @@ export default function SignInPage() {
         <InputStyled
           name="email"
           value={body.name}
-          required
           type="email"
           placeholder="E-mail"
           onChange={editBody}
@@ -48,7 +53,6 @@ export default function SignInPage() {
         <InputStyled
           name="password"
           value={body.password}
-          required
           type="password"
           placeholder="Senha"
           onChange={editBody}
@@ -56,7 +60,7 @@ export default function SignInPage() {
         <ButtonStyled>Entrar</ButtonStyled>
       </FormStyled>
 
-      <LinkStyled to="/cadastrar">Primeira vez? Cadastre-se!</LinkStyled>
+      <LinkStyled to="/sign-up">Primeira vez? Cadastre-se!</LinkStyled>
     </SignInDiv>
   );
 }

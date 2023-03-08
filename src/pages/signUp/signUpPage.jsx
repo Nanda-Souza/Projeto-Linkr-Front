@@ -22,8 +22,19 @@ export default function SignUpPage() {
   function submitForm(event) {
     event.preventDefault();
 
+    if (
+      !form.name ||
+      !form.email ||
+      !form.img_url ||
+      !form.password ||
+      !form.confirmPassword
+    ) {
+      alert("You must fill all the fields!");
+      return;
+    }
+
     if (form.password !== form.confirmPassword) {
-      alert("As senhas não conferem!");
+      alert("Passwords do not match!");
       return;
     }
 
@@ -31,13 +42,15 @@ export default function SignUpPage() {
       .singUp(form)
       .then((response) => {
         if (response.status === 201) {
-          alert("Cadastro realizado com sucesso!");
+          alert("Register successful");
           navigate("/");
-        } else {
-          alert("Erro ao cadastrar!");
         }
       })
-      .catch((error) => console.log(error));
+      .catch((error) => {
+        if (error.response.status === 409) {
+          alert("this email is already registered");
+        }
+      });
   }
 
   function editForm(e) {
