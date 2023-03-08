@@ -29,12 +29,12 @@ export default function SignUpPage() {
       !form.password ||
       !form.confirmPassword
     ) {
-      alert("Preencha todos os campos!");
+      alert("You must fill all the fields!");
       return;
     }
 
     if (form.password !== form.confirmPassword) {
-      alert("As senhas não conferem!");
+      alert("Passwords do not match!");
       return;
     }
 
