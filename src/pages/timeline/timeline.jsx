@@ -6,16 +6,12 @@ import {
   Post,
   LinkPost,
 } from "./timelineStyle";
-import { Header } from "../../components/header";
-import logo from "../../assets/linkr.png";
-import menu_vector from "../../assets/Vector (2).png";
-import profile from "../../assets/image 3.png";
 import timeline from "../../assets/timeline.png";
-import img_link from "../../assets/image 4.png";
 import { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router";
 import axios from "axios";
 import { AuthContext } from "../../contexts/authContext";
+import Header from "../../components/header/Header";
 
 export default function TimelinePage() {
   const { user } = useContext(AuthContext);
@@ -82,17 +78,8 @@ export default function TimelinePage() {
 
   return (
     <>
-      <Header>
-        <img src={logo} alt="logo" />
-        <div>
-          <img src={menu_vector} alt="menu" className="menu" />
-          <img
-            src={user.img_url}
-            alt="profile_picture"
-            className="profile_picture"
-          />
-        </div>
-      </Header>
+      <Header></Header>
+
       <Timeline>
         <img src={timeline} alt="" />
         <BoxCreatePost>

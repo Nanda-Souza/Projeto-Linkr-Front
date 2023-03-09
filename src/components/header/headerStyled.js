@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const Header = styled.div`
+export const HeaderDiv = styled.div`
   width: 100%;
   height: 72px;
   background-color: #151515;
