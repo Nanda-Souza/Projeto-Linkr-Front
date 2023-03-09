@@ -30,6 +30,8 @@ export const HeaderDiv = styled.div`
   .menu {
     width: 20px;
     height: 15px;
+    transform: ${(props) =>
+      props.showLogout ? "rotate(180deg)" : "rotate(0deg)"};
   }
   .profile_picture {
     margin-right: 20px;
@@ -40,6 +42,7 @@ export const HeaderDiv = styled.div`
 `;
 
 export const LogoutButton = styled.button`
+  display: ${(props) => (props.showLogout ? "block" : "none")};
   position: fixed;
   right: -10px;
   top: 72px;
