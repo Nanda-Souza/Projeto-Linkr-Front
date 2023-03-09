@@ -122,7 +122,7 @@ export default function SignUpPage() {
         <ButtonStyled disabled={disabled} onClick={submitForm}>
           Sign Up
         </ButtonStyled>
-        <LinkStyled to="/sign-in">Switch back to log in</LinkStyled>
+        <LinkStyled to="/">Switch back to log in</LinkStyled>
       </FormStyled>
     </SignUpDiv>
   );

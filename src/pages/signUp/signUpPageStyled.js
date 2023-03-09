@@ -72,7 +72,7 @@ export const InputStyled = styled.input`
   justify-self: center;
   color: #000;
   width: 80%;
-  height: 55px;
+  height: 50px;
   margin: 0 auto;
   margin-bottom: 13px;
   padding: 15px;
