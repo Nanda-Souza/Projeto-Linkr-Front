@@ -7,9 +7,11 @@ import {
   InputStyled,
   LinkStyled,
   SignUpDiv,
+  Title,
 } from "./signUpPageStyled";
 
 export default function SignUpPage() {
+  const [disabled, setDisabled] = useState(false);
   const [form, setForm] = useState({
     name: "",
     email: "",
@@ -38,6 +40,8 @@ export default function SignUpPage() {
       return;
     }
 
+    setDisabled(true);
+
     apiAuth
       .singUp(form)
       .then((response) => {
@@ -48,6 +52,7 @@ export default function SignUpPage() {
       })
       .catch((error) => {
         if (error.response.status === 409) {
+          setDisabled(false);
           alert("this email is already registered");
         }
       });
@@ -59,8 +64,18 @@ export default function SignUpPage() {
 
   return (
     <SignUpDiv>
+      <Title>
+        linkr
+        <p>
+          save, share and discover
+          <br />
+          the best links on the web
+        </p>
+      </Title>
+
       <FormStyled onSubmit={submitForm}>
         <InputStyled
+          disabled={disabled}
           name="name"
           value={form.name}
           required
@@ -69,6 +84,7 @@ export default function SignUpPage() {
           onChange={editForm}
         />
         <InputStyled
+          disabled={disabled}
           name="email"
           value={form.email}
           required
@@ -77,6 +93,7 @@ export default function SignUpPage() {
           onChange={editForm}
         />
         <InputStyled
+          disabled={disabled}
           name="img_url"
           value={form.img_url}
           required
@@ -85,6 +102,7 @@ export default function SignUpPage() {
           onChange={editForm}
         />
         <InputStyled
+          disabled={disabled}
           name="password"
           value={form.password}
           required
@@ -93,6 +111,7 @@ export default function SignUpPage() {
           onChange={editForm}
         />
         <InputStyled
+          disabled={disabled}
           name="confirmPassword"
           value={form.confirmPassword}
           required
@@ -100,10 +119,11 @@ export default function SignUpPage() {
           placeholder="Confirm password"
           onChange={editForm}
         />
-        <ButtonStyled onClick={submitForm}>Sign Up</ButtonStyled>
+        <ButtonStyled disabled={disabled} onClick={submitForm}>
+          Sign Up
+        </ButtonStyled>
+        <LinkStyled to="/">Switch back to log in</LinkStyled>
       </FormStyled>
-
-      <LinkStyled to="/sign-in">Switch back to log in</LinkStyled>
     </SignUpDiv>
   );
 }
