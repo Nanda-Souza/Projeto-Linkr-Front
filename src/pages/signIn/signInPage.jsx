@@ -7,10 +7,12 @@ import {
   InputStyled,
   LinkStyled,
   SignInDiv,
+  Title,
 } from "./signInPageStyled";
 
 export default function SignInPage() {
   const { login } = useContext(AuthContext);
+  const [disabled, setDisabled] = useState(false);
   const [body, setBody] = useState({
     email: "",
     password: "",
@@ -24,6 +26,8 @@ export default function SignInPage() {
       return;
     }
 
+    setDisabled(true);
+
     apiAuth
       .signIn(body)
       .then((res) => {
@@ -31,6 +35,7 @@ export default function SignInPage() {
       })
       .catch((err) => {
         if (err.response.status === 401) {
+          setDisabled(false);
           alert("Invalid credentials");
         }
       });
@@ -42,8 +47,18 @@ export default function SignInPage() {
 
   return (
     <SignInDiv>
+      <Title>
+        linkr
+        <p>
+          save, share and discover
+          <br />
+          the best links on the web
+        </p>
+      </Title>
+
       <FormStyled onSubmit={handleSubmit}>
         <InputStyled
+          disabled={disabled}
           name="email"
           value={body.name}
           type="email"
@@ -51,16 +66,16 @@ export default function SignInPage() {
           onChange={editBody}
         />
         <InputStyled
+          disabled={disabled}
           name="password"
           value={body.password}
           type="password"
           placeholder="Senha"
           onChange={editBody}
         />
-        <ButtonStyled>Entrar</ButtonStyled>
+        <ButtonStyled disabled={disabled}>Sign-in</ButtonStyled>
+        <LinkStyled to="/sign-up">First time? Create an account!</LinkStyled>
       </FormStyled>
-
-      <LinkStyled to="/sign-up">Primeira vez? Cadastre-se!</LinkStyled>
     </SignInDiv>
   );
 }
