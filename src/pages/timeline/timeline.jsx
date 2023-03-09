@@ -3,8 +3,6 @@ import {
   BoxCreatePost,
   Form,
   PostsList,
-  Post,
-  LinkPost,
   Message,
 } from "./timelineStyle";
 import timeline from "../../assets/timeline.png";
@@ -12,6 +10,7 @@ import { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { AuthContext } from "../../contexts/authContext";
 import Header from "../../components/header/Header";
+import Post from "../../components/post/Post";
 
 export default function TimelinePage() {
   const { user } = useContext(AuthContext);
@@ -55,7 +54,7 @@ export default function TimelinePage() {
     });
   }
 
-  function getPosts(){
+  function getPosts() {
     const config = {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -75,9 +74,8 @@ export default function TimelinePage() {
     });
   }
 
-
   useEffect(() => {
-   getPosts()
+    getPosts();
   }, []);
 
   return (
@@ -119,36 +117,39 @@ export default function TimelinePage() {
           </Form>
           {loadingApi ? (
             <Message>Loading...</Message>
-          ) : posts.length === 0 ? (<Message>There are no posts yet</Message>) : (
+          ) : posts.length === 0 ? (
+            <Message>There are no posts yet</Message>
+          ) : (
             <PostsList>
               {posts.map((post) => {
-                return (
-                  <Post key={post.post_id}>
-                    <div className="info">
-                      <img
-                        src={post.user_img_url}
-                        alt="profile_picture"
-                        className="profile_picture_post"
-                      />
-                      <p>{post.user_name}</p>
-                    </div>
-                    <p className="description_post">{post.post_comment}</p>
-                    <a href={post.post_link} target="_blank">
-                      <LinkPost>
-                        <div className="link_details">
-                          <h1>{post.post_title}</h1>
-                          <h2>{post.post_description}</h2>
-                          <h3>{post.post_url}</h3>
-                        </div>
-                        <img
-                          src={post.post_image}
-                          alt=""
-                          className="link_img"
-                        />
-                      </LinkPost>
-                    </a>
-                  </Post>
-                );
+                return <Post key={post.post_id} post={post}></Post>;
+                // return (
+                //   <Post key={post.post_id}>
+                //     <div className="info">
+                //       <img
+                //         src={post.user_img_url}
+                //         alt="profile_picture"
+                //         className="profile_picture_post"
+                //       />
+                //       <p>{post.user_name}</p>
+                //     </div>
+                //     <p className="description_post">{post.post_comment}</p>
+                //     <a href={post.post_link} target="_blank">
+                //       <LinkPost>
+                //         <div className="link_details">
+                //           <h1>{post.post_title}</h1>
+                //           <h2>{post.post_description}</h2>
+                //           <h3>{post.post_url}</h3>
+                //         </div>
+                //         <img
+                //           src={post.post_image}
+                //           alt=""
+                //           className="link_img"
+                //         />
+                //       </LinkPost>
+                //     </a>
+                //   </Post>
+                // );
               })}
             </PostsList>
           )}
