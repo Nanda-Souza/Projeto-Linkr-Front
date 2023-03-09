@@ -1,5 +1,9 @@
 import styled from "styled-components";
 
+export const HeaderContainer = styled.div`
+  display: block;
+`;
+
 export const HeaderDiv = styled.div`
   width: 100%;
   height: 72px;
@@ -26,6 +30,8 @@ export const HeaderDiv = styled.div`
   .menu {
     width: 20px;
     height: 15px;
+    transform: ${(props) =>
+      props.showLogout ? "rotate(180deg)" : "rotate(0deg)"};
   }
   .profile_picture {
     margin-right: 20px;
@@ -33,4 +39,23 @@ export const HeaderDiv = styled.div`
     height: 40px;
     border-radius: 20px;
   }
+`;
+
+export const LogoutButton = styled.button`
+  display: ${(props) => (props.showLogout ? "block" : "none")};
+  position: fixed;
+  right: -10px;
+  top: 72px;
+  width: 150px;
+  height: 43px;
+  background: #171717;
+  border-radius: 0px 0px 20px 20px;
+  border: none;
+  color: white;
+  cursor: pointer;
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 15px;
+  line-height: 18px;
 `;
