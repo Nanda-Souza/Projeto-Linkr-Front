@@ -31,11 +31,12 @@ export default function SignInPage() {
     apiAuth
       .signIn(body)
       .then((res) => {
+        console.log(res);
         login(res.data);
       })
       .catch((err) => {
+        setDisabled(false);
         if (err.response.status === 401) {
-          setDisabled(false);
           alert("Invalid credentials");
         }
       });
