@@ -17,6 +17,15 @@ export const Timeline = styled.div`
   }
 `;
 
+export const Message = styled.div`
+  margin-top: 80px;
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 300;
+  font-size: 30px;
+  color: #FFFFFF;
+`;
+
 export const BoxCreatePost = styled.div`
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 16px;

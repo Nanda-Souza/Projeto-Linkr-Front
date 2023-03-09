@@ -5,10 +5,10 @@ import {
   PostsList,
   Post,
   LinkPost,
+  Message,
 } from "./timelineStyle";
 import timeline from "../../assets/timeline.png";
 import { useState, useEffect, useContext } from "react";
-import { useNavigate } from "react-router";
 import axios from "axios";
 import { AuthContext } from "../../contexts/authContext";
 import Header from "../../components/header/Header";
@@ -16,9 +16,9 @@ import Header from "../../components/header/Header";
 export default function TimelinePage() {
   const { user } = useContext(AuthContext);
   const { token } = useContext(AuthContext);
-  const navigate = useNavigate();
   const [button, setButton] = useState("Publish");
   const [loading, setLoading] = useState(false);
+  const [loadingApi, setLoadingApi] = useState(true);
   const [url, setUrl] = useState("");
   const [description, setDescription] = useState("");
   const [posts, setPosts] = useState([]);
@@ -44,7 +44,7 @@ export default function TimelinePage() {
       setDescription("");
       setButton("Publish");
       setLoading(false);
-      navigate("/timeline");
+      window.location.reload();
     });
     promise.catch((err) => {
       alert("There was an error publishing your link");
@@ -52,7 +52,6 @@ export default function TimelinePage() {
       setDescription("");
       setButton("Publish");
       setLoading(false);
-      navigate("/timeline");
     });
   }
 
@@ -65,7 +64,7 @@ export default function TimelinePage() {
     const URL = `${process.env.REACT_APP_API_URL}/timeline`;
     const promise = axios.get(URL, config);
     promise.then((res) => {
-      console.log(res.data);
+      setLoadingApi(false);
       setPosts(res.data);
     });
     promise.catch((error) => {
@@ -113,55 +112,41 @@ export default function TimelinePage() {
               {button}
             </button>
           </Form>
-          <PostsList>
-            {posts.map((post) => {
-              return (
-                <Post key={post.id}>
-                  <div className="info">
-                    <img
-                      src={post.user_img_url}
-                      alt="profile_picture"
-                      className="profile_picture_post"
-                    />
-                    <p>{post.user_name}</p>
-                  </div>
-                  <p className="description_post">{post.post_comment}</p>
-                  <LinkPost>
-                    <div className="link_details">
-                      <h1>{post.post_title}</h1>
-                      <h2>{post.post_description}</h2>
-                      <h3>{post.post_url}</h3>
+          {loadingApi ? (
+            <Message>Loading...</Message>
+          ) : posts.length === 0 ? (<Message>There are no posts yet</Message>) : (
+            <PostsList>
+              {posts.map((post) => {
+                return (
+                  <Post key={post.post_id}>
+                    <div className="info">
+                      <img
+                        src={post.user_img_url}
+                        alt="profile_picture"
+                        className="profile_picture_post"
+                      />
+                      <p>{post.user_name}</p>
                     </div>
-                    <img src={post.post_image} alt="" className="link_img" />
-                  </LinkPost>
-                </Post>
-              );
-            })}
-
-            {/* <Post>
-              <div className="info">
-                <img
-                  src={profile}
-                  alt="profile_picture"
-                  className="profile_picture_post"
-                />
-                <p>Juvenal Juvêncio</p>
-              </div>
-              <p className="description_post">Olha esse link, muito topeeeee</p>
-              <LinkPost>
-                <div className="link_details">
-                  <h1>Como aplicar o Material UI em um projeto React</h1>
-                  <h2>
-                    Hey! I have moved this tutorial to my personal blog. Same
-                    content, new location. Sorry about making you click through
-                    to another page.
-                  </h2>
-                  <h3>https://medium.com/@pshrmn/a-simple-react-router</h3>
-                </div>
-                <img src={img_link} alt="" className="link_img" />
-              </LinkPost>
-            </Post> */}
-          </PostsList>
+                    <p className="description_post">{post.post_comment}</p>
+                    <a href={post.post_link} target="_blank">
+                      <LinkPost>
+                        <div className="link_details">
+                          <h1>{post.post_title}</h1>
+                          <h2>{post.post_description}</h2>
+                          <h3>{post.post_url}</h3>
+                        </div>
+                        <img
+                          src={post.post_image}
+                          alt=""
+                          className="link_img"
+                        />
+                      </LinkPost>
+                    </a>
+                  </Post>
+                );
+              })}
+            </PostsList>
+          )}
         </BoxCreatePost>
       </Timeline>
     </>
