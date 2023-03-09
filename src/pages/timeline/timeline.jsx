@@ -123,33 +123,6 @@ export default function TimelinePage() {
             <PostsList>
               {posts.map((post) => {
                 return <Post key={post.post_id} post={post}></Post>;
-                // return (
-                //   <Post key={post.post_id}>
-                //     <div className="info">
-                //       <img
-                //         src={post.user_img_url}
-                //         alt="profile_picture"
-                //         className="profile_picture_post"
-                //       />
-                //       <p>{post.user_name}</p>
-                //     </div>
-                //     <p className="description_post">{post.post_comment}</p>
-                //     <a href={post.post_link} target="_blank">
-                //       <LinkPost>
-                //         <div className="link_details">
-                //           <h1>{post.post_title}</h1>
-                //           <h2>{post.post_description}</h2>
-                //           <h3>{post.post_url}</h3>
-                //         </div>
-                //         <img
-                //           src={post.post_image}
-                //           alt=""
-                //           className="link_img"
-                //         />
-                //       </LinkPost>
-                //     </a>
-                //   </Post>
-                // );
               })}
             </PostsList>
           )}
