@@ -116,7 +116,7 @@ export default function TimelinePage() {
           <PostsList>
             {posts.map((post) => {
               return (
-                <Post>
+                <Post key={post.id}>
                   <div className="info">
                     <img
                       src={post.user_img_url}
