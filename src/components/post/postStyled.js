@@ -8,6 +8,10 @@ export const PostStyled = styled.li`
   width: 611px;
   height: 276px;
   background-color: #171717;
+  .header_post{
+    display:flex;
+    justify-content:space-between;
+  }
   .info {
     display: flex;
     align-items: center;
@@ -35,6 +39,10 @@ export const PostStyled = styled.li`
     font-weight: 300;
     font-size: 17px;
     color: #ffffff;
+  }
+  .buttons{
+    margin-top:10px;
+    margin-right: 30px;
   }
   @media (max-width: 600px) {
     border-radius: 0px;
