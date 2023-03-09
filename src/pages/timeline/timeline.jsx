@@ -44,7 +44,7 @@ export default function TimelinePage() {
       setDescription("");
       setButton("Publish");
       setLoading(false);
-      window.location.reload();
+      getPosts();
     });
     promise.catch((err) => {
       alert("There was an error publishing your link");
@@ -55,7 +55,7 @@ export default function TimelinePage() {
     });
   }
 
-  useEffect(() => {
+  function getPosts(){
     const config = {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -73,6 +73,11 @@ export default function TimelinePage() {
         "An error occured while trying to fetch the posts, please refresh the page"
       );
     });
+  }
+
+
+  useEffect(() => {
+   getPosts()
   }, []);
 
   return (
