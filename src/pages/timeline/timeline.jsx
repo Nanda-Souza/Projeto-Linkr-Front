@@ -122,7 +122,13 @@ export default function TimelinePage() {
           ) : (
             <PostsList>
               {posts.map((post) => {
-                return <Post key={post.post_id} post={post}></Post>;
+                return (
+                  <Post
+                    key={post.post_id}
+                    post={post}
+                    getPosts={getPosts}
+                  ></Post>
+                );
               })}
             </PostsList>
           )}

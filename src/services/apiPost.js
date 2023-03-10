@@ -26,7 +26,7 @@ function likePostReq(isLiked, postId, token) {
   }
 }
 
-export function deleteAPost(postId, token) {
+function deleteAPost(postId, token) {
   return axios.delete(`${BASE_URL}/posts/${Number(postId)}`, {
     headers: {
       Authorization: `Bearer ${token}`,

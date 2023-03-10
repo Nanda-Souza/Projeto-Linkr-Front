@@ -2,7 +2,7 @@ import { LinkPost, PostStyled } from "./postStyled";
 import { BsPencil } from "react-icons/bs";
 import DeletePost from "../deletepost/DeletePost";
 
-export default function Post({ post }) {
+export default function Post({ post, getPosts }) {
   const {
     post_comment,
     post_description,
@@ -28,7 +28,7 @@ export default function Post({ post }) {
         </div>
         <div className="buttons">
           <BsPencil color="white" size={17} />
-          <DeletePost post_id={post_id} />
+          <DeletePost getPosts={getPosts} post_id={post_id} />
         </div>
       </div>
       <p className="description_post">{post_comment}</p>
