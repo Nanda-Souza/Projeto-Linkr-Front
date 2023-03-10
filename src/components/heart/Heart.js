@@ -1,6 +1,6 @@
 import { HeartStyled } from "./heartStyled";
 import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import likePostReq from "../../services/apiPost";
 import { AuthContext } from "../../contexts/authContext";
 export default function Heart(props){

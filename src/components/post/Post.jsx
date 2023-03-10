@@ -2,6 +2,9 @@ import { LinkPost, PostStyled } from "./postStyled";
 import { BsPencil } from "react-icons/bs";
 import DeletePost from "../deletepost/DeletePost";
 import Heart from "../heart/Heart";
+import { useState, useContext, useRef, useEffect } from "react";
+import axios from "axios";
+import { AuthContext } from "../../contexts/authContext";
 
 export default function Post({ post, getPosts }) {
   const {
@@ -12,10 +15,64 @@ export default function Post({ post, getPosts }) {
     post_link,
     post_title,
     post_url,
-    user_id,
     user_name,
     user_img_url,
   } = post;
+
+  const [comment, setComment] = useState(post_comment);
+  const [editPost, setEditPost] = useState(false);
+  const [newComment, setNewComment] = useState("");
+  const [isDisable, setIsDisable] = useState(false);
+  const { token } = useContext(AuthContext);
+  const inputRef = useRef(null);
+
+  function editComment(post_id) {
+    setNewComment("");
+    setEditPost(true);
+
+    if (!newComment || newComment.trim().length === 0) {
+      return;
+    }
+
+    const body = { description: newComment };
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    const promise = axios.patch(
+      `${process.env.REACT_APP_API_URL}/posts/${post_id}`,
+      body,
+      config
+    );
+    setIsDisable(true);
+    promise.then((res) => {
+      setComment(newComment);
+      setEditPost(false);
+    });
+    promise.catch((error) => {
+      alert("Something went wrong. Please, try again.");
+      setIsDisable(false);
+    });
+  }
+
+  function keyDown(e, post_id) {
+    if (e.key === "Enter") {
+      setEditPost(false);
+      editComment(post_id);
+    }
+    if (e.key === "Escape") {
+      setNewComment("");
+      setEditPost(false);
+    }
+  }
+
+  useEffect(() => {
+    if (editPost) {
+      inputRef.current.focus();
+    }
+  }, [editPost]);
+
   return (
     <PostStyled key={post_id}>
       <div className="header_post">
@@ -32,7 +89,19 @@ export default function Post({ post, getPosts }) {
           <DeletePost getPosts={getPosts} post_id={post_id} />
         </div>
       </div>
-      <p className="description_post">{post_comment}</p>
+      {editPost ? (
+        <input
+          className="edit_comment"
+          type="text"
+          disabled={isDisable}
+          ref={inputRef}
+          value={newComment}
+          onChange={(e) => setNewComment(e.target.value)}
+          onKeyDown={(e) => keyDown(e, post_id)}
+        />
+      ) : (
+        <p className="description_post">{comment}</p>
+      )}
       <a href={post_link} target="_blank">
         <LinkPost>
           <div className="link_details">
