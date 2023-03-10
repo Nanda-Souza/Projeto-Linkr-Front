@@ -1,5 +1,6 @@
 import { LinkPost, PostStyled } from "./postStyled";
 import { BsPencil, BsTrash } from "react-icons/bs";
+import Heart from "../heart/Heart";
 
 export default function Post({ post }) {
   const {
