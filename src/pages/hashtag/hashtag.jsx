@@ -9,26 +9,24 @@ import {
   import { HashtagBox } from "../../components/hashtag";
   import logo from "../../assets/linkr.png";
   import menu_vector from "../../assets/Vector (2).png";
-  import profile from "../../assets/image 3.png";
-  //import timeline from "../../assets/timeline.png";
+  import profile from "../../assets/image 3.png";  
   import img_link from "../../assets/image 4.png"
-  import { useState, useEffect } from "react";
-  import { useNavigate } from "react-router";
+  import { useState, useEffect, useContext } from "react";
+  import { useNavigate, useParams } from "react-router";
+  import { AuthContext } from "../../contexts/authContext";
   import axios from "axios";
   
   export default function HashtagPage() {
       const navigate = useNavigate();
-      const [button, setButton] = useState("Publish")
-      const [loading, setLoading] = useState(false)
-      const [url, setUrl] = useState("")
-      const [description, setDescription] = useState("")
-      const [trends, setTrends] = useState(undefined)  
+      const { hashtag } = useParams();
+      const { token } = useContext(AuthContext);      
+      const [trends, setTrends] = useState(undefined)  ;
       
   
       useEffect(() => {
           const config = {
             headers: {
-              Authorization: `Bearer 408b6858-3ee1-4378-8f86-274401c93a72`,
+                Authorization: `Bearer ${token}`,
             },
           };
           const URL = `${process.env.REACT_APP_API_URL}/top-trending`;        
@@ -53,7 +51,7 @@ import {
           </div>
         </Header>
         <Timeline>
-          <p>#react</p>
+          <p>#{hashtag}</p>
           
             
             <PostsList>
