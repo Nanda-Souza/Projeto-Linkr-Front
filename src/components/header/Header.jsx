@@ -43,6 +43,7 @@ export default function Header() {
             className="menu"
           />
           <img
+            data-test="avatar"
             onClick={handleclick}
             src={user.img_url}
             alt="profile_picture"
@@ -51,6 +52,7 @@ export default function Header() {
         </div>
       </HeaderDiv>
       <LogoutButton
+        data-test="logout"
         ref={logoutButtonRef}
         className="logoutButton"
         onClick={logout}

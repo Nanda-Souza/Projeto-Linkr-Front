@@ -75,6 +75,7 @@ export default function SignUpPage() {
 
       <FormStyled onSubmit={submitForm}>
         <InputStyled
+          data-test="username"
           disabled={disabled}
           name="name"
           value={form.name}
@@ -84,6 +85,7 @@ export default function SignUpPage() {
           onChange={editForm}
         />
         <InputStyled
+          data-test="email"
           disabled={disabled}
           name="email"
           value={form.email}
@@ -93,6 +95,7 @@ export default function SignUpPage() {
           onChange={editForm}
         />
         <InputStyled
+          data-test="picture-url"
           disabled={disabled}
           name="img_url"
           value={form.img_url}
@@ -102,6 +105,7 @@ export default function SignUpPage() {
           onChange={editForm}
         />
         <InputStyled
+          data-test="password"
           disabled={disabled}
           name="password"
           value={form.password}
@@ -111,6 +115,7 @@ export default function SignUpPage() {
           onChange={editForm}
         />
         <InputStyled
+          data-test="confirm-password"
           disabled={disabled}
           name="confirmPassword"
           value={form.confirmPassword}
@@ -119,10 +124,16 @@ export default function SignUpPage() {
           placeholder="Confirm password"
           onChange={editForm}
         />
-        <ButtonStyled disabled={disabled} onClick={submitForm}>
+        <ButtonStyled
+          data-test="sign-up-btn"
+          disabled={disabled}
+          onClick={submitForm}
+        >
           Sign Up
         </ButtonStyled>
-        <LinkStyled to="/">Switch back to log in</LinkStyled>
+        <LinkStyled data-test="login-link" to="/">
+          Switch back to log in
+        </LinkStyled>
       </FormStyled>
     </SignUpDiv>
   );

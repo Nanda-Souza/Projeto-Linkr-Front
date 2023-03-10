@@ -37,7 +37,7 @@ export default function DeletePost({ post_id, getPosts }) {
 
   return (
     <>
-      <TrashCan onClick={toggleModal} />
+      <TrashCan data-test="delete-btn" onClick={toggleModal} />
       <ModalStyled
         isOpen={isOpen}
         onRequestClose={toggleModal}
@@ -45,10 +45,10 @@ export default function DeletePost({ post_id, getPosts }) {
       >
         <h2>Are you sure you want to delete this post?</h2>
         <Buttons>
-          <button className="cancel" onClick={toggleModal}>
+          <button data-test="cancel" className="cancel" onClick={toggleModal}>
             No, go back!
           </button>
-          <button className="confirm" onClick={deletePost}>
+          <button data-test="confirm" className="confirm" onClick={deletePost}>
             Delete
           </button>
         </Buttons>
