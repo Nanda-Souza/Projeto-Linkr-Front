@@ -2,22 +2,37 @@ import axios from "axios";
 
 const BASE_URL = process.env.REACT_APP_API_URL;
 
-
 function likePostReq(isLiked, postId, token) {
-    if(!isLiked){
-    return axios.post(`${BASE_URL}/like`, {postId: Number(postId)}, {
+  if (!isLiked) {
+    return axios.post(
+      `${BASE_URL}/like`,
+      { postId: Number(postId) },
+      {
         headers: {
           Authorization: `Bearer ${token}`,
         },
-      });}
-    else{
-        return axios.delete(`${BASE_URL}/like`, {postId: Number(postId)}, {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          });
-    }
+      }
+    );
+  } else {
+    return axios.delete(
+      `${BASE_URL}/like`,
+      { postId: Number(postId) },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
   }
+}
+
+export function deleteAPost(postId, token) {
+  return axios.delete(`${BASE_URL}/posts/${postId}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+}
 
 //função para dar like no botão:
 //no componente do post:
@@ -33,7 +48,7 @@ function likePostReq(isLiked, postId, token) {
 //
 //Para ver a janelinha do botao de like:
 // const [janelaVisivel, setJanelaVisivel] = useState('');
-//<button 
+//<button
 //onMouseEnter={() => setJanelaVisivel('componente da janelinha')}
 //onMouseLeave={() => setJanelaVisivel('')}
 //>
@@ -50,6 +65,4 @@ function likePostReq(isLiked, postId, token) {
 //     texto = 'Ninguém curtiu'
 // }
 
-
-export default likePostReq
-
+export default likePostReq;
