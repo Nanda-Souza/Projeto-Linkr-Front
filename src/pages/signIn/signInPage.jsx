@@ -59,6 +59,7 @@ export default function SignInPage() {
 
       <FormStyled onSubmit={handleSubmit}>
         <InputStyled
+          data-test="email"
           disabled={disabled}
           name="email"
           value={body.name}
@@ -67,6 +68,7 @@ export default function SignInPage() {
           onChange={editBody}
         />
         <InputStyled
+          data-test="password"
           disabled={disabled}
           name="password"
           value={body.password}
@@ -74,8 +76,12 @@ export default function SignInPage() {
           placeholder="Senha"
           onChange={editBody}
         />
-        <ButtonStyled disabled={disabled}>Sign-in</ButtonStyled>
-        <LinkStyled to="/sign-up">First time? Create an account!</LinkStyled>
+        <ButtonStyled data-test="login-btn" disabled={disabled}>
+          Sign-in
+        </ButtonStyled>
+        <LinkStyled data-test="sign-up-link" to="/sign-up">
+          First time? Create an account!
+        </LinkStyled>
       </FormStyled>
     </SignInDiv>
   );
