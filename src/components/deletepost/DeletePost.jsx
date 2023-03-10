@@ -4,9 +4,19 @@ import { AuthContext } from "../../contexts/authContext";
 import { deleteAPost } from "../../services/apiPost";
 import { TrashCan } from "./deletePostStyled";
 
-export default function DeletePost({ post }) {
-  const { post_id } = post;
+export default function DeletePost({ post_id }) {
   const { token } = useContext(AuthContext);
 
-  return <TrashCan />;
+  function deletePost() {
+    console.log(post_id);
+    deleteAPost(post_id, token)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
+  return <TrashCan onClick={deletePost} />;
 }

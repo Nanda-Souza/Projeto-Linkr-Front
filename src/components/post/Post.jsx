@@ -28,7 +28,7 @@ export default function Post({ post }) {
         </div>
         <div className="buttons">
           <BsPencil color="white" size={17} />
-          <DeletePost post={post} />
+          <DeletePost post_id={post_id} />
         </div>
       </div>
       <p className="description_post">{post_comment}</p>

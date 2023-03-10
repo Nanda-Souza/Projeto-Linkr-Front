@@ -27,12 +27,17 @@ function likePostReq(isLiked, postId, token) {
 }
 
 export function deleteAPost(postId, token) {
-  return axios.delete(`${BASE_URL}/posts/${postId}`, {
+  return axios.delete(`${BASE_URL}/posts/${Number(postId)}`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
   });
 }
+
+export const apiPost = {
+  likePostReq,
+  deleteAPost,
+};
 
 //função para dar like no botão:
 //no componente do post:
