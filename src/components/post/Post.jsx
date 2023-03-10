@@ -22,15 +22,17 @@ export default function Post({ post, getPosts }) {
   const [comment, setComment] = useState(post_comment);
   const [editPost, setEditPost] = useState(false);
   const [newComment, setNewComment] = useState("");
-  const [isDisable, setIsDisable] = useState(false);
+  const [isDisable, setIsDisable] = useState(false)
   const { token } = useContext(AuthContext);
   const inputRef = useRef(null);
 
+  
+
   function editComment(post_id) {
     setNewComment("");
-    setEditPost(true);
+    setEditPost(!editPost);
 
-    if (!newComment || newComment.trim().length === 0) {
+      if (!newComment || newComment.trim().length === 0) {
       return;
     }
 
@@ -45,14 +47,18 @@ export default function Post({ post, getPosts }) {
       body,
       config
     );
-    setIsDisable(true);
+    
+      setIsDisable(true)
+
     promise.then((res) => {
       setComment(newComment);
       setEditPost(false);
+      setIsDisable(false)
     });
     promise.catch((error) => {
-      alert("Something went wrong. Please, try again.");
-      setIsDisable(false);
+      setIsDisable(false)
+      setNewComment(newComment)
+      alert("Something wet wrong. Please, try again.")     
     });
   }
 
@@ -66,6 +72,7 @@ export default function Post({ post, getPosts }) {
       setEditPost(false);
     }
   }
+
 
   useEffect(() => {
     if (editPost) {
@@ -85,7 +92,7 @@ export default function Post({ post, getPosts }) {
           <p>{user_name}</p>
         </div>
         <div className="buttons">
-          <BsPencil color="white" size={17} />
+          <BsPencil color="white" size={17} onClick={() => editComment(post_id)}/>
           <DeletePost getPosts={getPosts} post_id={post_id} />
         </div>
       </div>
@@ -93,8 +100,8 @@ export default function Post({ post, getPosts }) {
         <input
           className="edit_comment"
           type="text"
-          disabled={isDisable}
           ref={inputRef}
+          disabled={isDisable}
           value={newComment}
           onChange={(e) => setNewComment(e.target.value)}
           onKeyDown={(e) => keyDown(e, post_id)}

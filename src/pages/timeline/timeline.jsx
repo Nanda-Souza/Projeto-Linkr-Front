@@ -90,7 +90,7 @@ export default function TimelinePage() {
       setTrends(res.data);
     });
     promise.catch(error => {
-      console.log(error.data.message);
+      console.log(error.message);
   });  
   }
 
