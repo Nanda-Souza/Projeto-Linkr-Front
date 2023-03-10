@@ -98,15 +98,15 @@ import {
               </Post>
             </PostsList>
 
-<HashtagBox>
-<h1>trending</h1>
-<div className="linha"></div>
-<ul>
-  {trends?.map((trend) => (
-    <li key={trend.trendName}># {trend.trendName}</li>
-  ))}  
-</ul>
-</HashtagBox>
+            <HashtagBox>
+            <h1>trending</h1>
+            <div className="linha"></div>
+            <ul>
+            {trends?.map((trend) => (
+                <li key={trend.trendName}># {trend.trendName}</li>
+            ))}  
+            </ul>
+            </HashtagBox>
   
         </Timeline>       
       </>
