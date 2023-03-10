@@ -1,8 +1,9 @@
 import { LinkPost, PostStyled } from "./postStyled";
-import { BsPencil, BsTrash } from "react-icons/bs";
+import { BsPencil } from "react-icons/bs";
+import DeletePost from "../deletepost/DeletePost";
 import Heart from "../heart/Heart";
 
-export default function Post({ post }) {
+export default function Post({ post, getPosts }) {
   const {
     post_comment,
     post_description,
@@ -27,8 +28,8 @@ export default function Post({ post }) {
           <p>{user_name}</p>
         </div>
         <div className="buttons">
-          <BsPencil color="white" size={17}/>
-          <BsTrash color="white" size={17} style={{ marginLeft: 15 }} />
+          <BsPencil color="white" size={17} />
+          <DeletePost getPosts={getPosts} post_id={post_id} />
         </div>
       </div>
       <p className="description_post">{post_comment}</p>

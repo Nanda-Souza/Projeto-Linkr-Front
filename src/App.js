@@ -4,6 +4,9 @@ import SignInPage from "./pages/signIn/signInPage";
 import SignUpPage from "./pages/signUp/signUpPage";
 import TimelinePage from "./pages/timeline/timeline";
 import HashtagPage from "./pages/hashtag/hashtag";
+import Modal from "react-modal";
+
+Modal.setAppElement("#root");
 
 function App() {
   return (
