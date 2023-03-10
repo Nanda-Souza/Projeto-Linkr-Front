@@ -11,6 +11,8 @@ import axios from "axios";
 import { AuthContext } from "../../contexts/authContext";
 import Header from "../../components/header/Header";
 import Post from "../../components/post/Post";
+import { HashtagBox } from "../../components/hashtag";
+import { useNavigate } from "react-router";
 
 export default function TimelinePage() {
   const { user } = useContext(AuthContext);
@@ -21,6 +23,8 @@ export default function TimelinePage() {
   const [url, setUrl] = useState("");
   const [description, setDescription] = useState("");
   const [posts, setPosts] = useState([]);
+  const [trends, setTrends] = useState(undefined)  
+  const navigate = useNavigate();
 
   function createPost(e) {
     e.preventDefault();
@@ -74,8 +78,29 @@ export default function TimelinePage() {
     });
   }
 
+  function getTrends() {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    const URL = `${process.env.REACT_APP_API_URL}/top-trending`;        
+    const promise = axios.get(URL, config);
+    promise.then((res) => {
+      setTrends(res.data);
+    });
+    promise.catch(error => {
+      console.log(error.data.message);
+  });  
+  }
+
+  function navigateTrends(hashtag){
+    navigate(`/hashtag/${hashtag}`)    
+  }
+
   useEffect(() => {
     getPosts();
+    getTrends();
   }, []);
 
   return (
@@ -133,6 +158,15 @@ export default function TimelinePage() {
             </PostsList>
           )}
         </BoxCreatePost>
+        <HashtagBox>
+            <h1>trending</h1>
+            <div className="linha"></div>
+            <ul>
+            {trends?.map((trend) => (
+                <li key={trend.trendName} onClick={() => navigateTrends(trend.trendName)}># {trend.trendName}</li>
+            ))}  
+            </ul>
+            </HashtagBox>
       </Timeline>
     </>
   );
