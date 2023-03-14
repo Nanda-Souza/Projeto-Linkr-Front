@@ -1,17 +1,22 @@
 import { useContext, useEffect, useRef, useState } from "react";
-import { HeaderContainer, HeaderDiv, LogoutButton } from "./headerStyled";
+import {
+  HeaderContainer,
+  HeaderDiv,
+  LogoutButton,
+  OptionsContainer,
+} from "./headerStyled";
 import logo from "../../assets/linkr.png";
 import menu_vector from "../../assets/Vector (2).png";
 import { AuthContext } from "../../contexts/authContext";
 
 export default function Header() {
   const { user, logout } = useContext(AuthContext);
-  const [showLogout, setShowLogout] = useState(false);
+  const [showOptions, setShowOptions] = useState(false);
   const logoutButtonRef = useRef();
 
   const handleclick = (event) => {
     event.stopPropagation();
-    setShowLogout(!showLogout);
+    setShowOptions(!showOptions);
   };
 
   useEffect(() => {
@@ -20,7 +25,7 @@ export default function Header() {
         logoutButtonRef.current &&
         !logoutButtonRef.current.contains(event.target)
       ) {
-        setShowLogout(false);
+        setShowOptions(false);
       }
     };
 
@@ -33,7 +38,7 @@ export default function Header() {
 
   return (
     <HeaderContainer>
-      <HeaderDiv showLogout={showLogout}>
+      <HeaderDiv showOptions={showOptions}>
         <img src={logo} alt="logo" />
         <div>
           <img
@@ -51,15 +56,17 @@ export default function Header() {
           />
         </div>
       </HeaderDiv>
-      <LogoutButton
-        data-test="logout"
-        ref={logoutButtonRef}
-        className="logoutButton"
-        onClick={logout}
-        showLogout={showLogout}
-      >
-        Logout
-      </LogoutButton>
+      <OptionsContainer data-test="menu" showOptions={showOptions}>
+        <LogoutButton
+          data-test="logout"
+          ref={logoutButtonRef}
+          className="logoutButton"
+          onClick={logout}
+          disabled={showOptions ? false : true}
+        >
+          Logout
+        </LogoutButton>
+      </OptionsContainer>
     </HeaderContainer>
   );
 }
