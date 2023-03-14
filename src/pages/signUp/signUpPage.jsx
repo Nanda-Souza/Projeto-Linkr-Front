@@ -45,16 +45,16 @@ export default function SignUpPage() {
     apiAuth
       .singUp(form)
       .then((response) => {
-        if (response.status === 201) {
-          alert("Register successful");
-          navigate("/");
-        }
+        alert("Register successful");
+        navigate("/");
       })
       .catch((error) => {
         if (error.response.status === 409) {
-          setDisabled(false);
           alert("this email is already registered");
+        } else {
+          alert("An error occurred, please try again later");
         }
+        setDisabled(false);
       });
   }
 
