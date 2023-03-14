@@ -17,7 +17,7 @@ export default function SignUpPage() {
     email: "",
     img_url: "",
     password: "",
-    confirmPassword: "",
+    // confirmPassword: "",
   });
   const navigate = useNavigate();
 
@@ -28,17 +28,17 @@ export default function SignUpPage() {
       !form.name ||
       !form.email ||
       !form.img_url ||
-      !form.password ||
-      !form.confirmPassword
+      !form.password
+      // || !form.confirmPassword
     ) {
       alert("You must fill all the fields!");
       return;
     }
 
-    if (form.password !== form.confirmPassword) {
-      alert("Passwords do not match!");
-      return;
-    }
+    // if (form.password !== form.confirmPassword) {
+    //   alert("Passwords do not match!");
+    //   return;
+    // }
 
     setDisabled(true);
 
@@ -114,7 +114,7 @@ export default function SignUpPage() {
           placeholder="Password"
           onChange={editForm}
         />
-        <InputStyled
+        {/* <InputStyled
           data-test="confirm-password"
           disabled={disabled}
           name="confirmPassword"
@@ -123,7 +123,7 @@ export default function SignUpPage() {
           type="password"
           placeholder="Confirm password"
           onChange={editForm}
-        />
+        /> */}
         <ButtonStyled
           data-test="sign-up-btn"
           disabled={disabled}
