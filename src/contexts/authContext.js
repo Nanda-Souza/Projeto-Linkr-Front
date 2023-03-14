@@ -24,7 +24,6 @@ export const AuthProvider = ({ children }) => {
         setUser(loggedUser);
         setToken(token);
         navigate("/timeline");
-        
       })
       .catch((err) => {
         if (err.response.status === 401) {
