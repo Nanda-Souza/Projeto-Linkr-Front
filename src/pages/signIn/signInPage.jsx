@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../contexts/authContext";
 import apiAuth from "../../services/apiAuth";
 import {
@@ -11,12 +11,23 @@ import {
 } from "./signInPageStyled";
 
 export default function SignInPage() {
-  const { login } = useContext(AuthContext);
+  const { login, setUser, setToken } = useContext(AuthContext);
   const [disabled, setDisabled] = useState(false);
   const [body, setBody] = useState({
     email: "",
     password: "",
   });
+
+  useEffect(() => {
+    const recoveredUser = localStorage.getItem("user");
+    const recoveredToken = localStorage.getItem("tokenUser");
+
+    if (recoveredUser && recoveredToken) {
+      setUser(JSON.parse(recoveredUser));
+      setToken(JSON.parse(recoveredToken));
+      login({ token: JSON.parse(recoveredToken) });
+    }
+  }, []);
 
   function handleSubmit(e) {
     e.preventDefault();

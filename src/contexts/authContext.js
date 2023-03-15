@@ -42,17 +42,6 @@ export const AuthProvider = ({ children }) => {
     navigate("/");
   };
 
-  useEffect(() => {
-    const recoveredUser = localStorage.getItem("user");
-    const recoveredToken = localStorage.getItem("tokenUser");
-
-    if (recoveredUser && recoveredToken) {
-      setUser(JSON.parse(recoveredUser));
-      setToken(JSON.parse(recoveredToken));
-      login({ token: JSON.parse(recoveredToken) });
-    }
-  }, []);
-
   return (
     <AuthContext.Provider
       value={{
@@ -61,6 +50,8 @@ export const AuthProvider = ({ children }) => {
         token,
         login,
         logout,
+        setToken,
+        setUser,
       }}
     >
       {children}
