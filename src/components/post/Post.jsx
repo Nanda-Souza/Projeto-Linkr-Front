@@ -15,6 +15,7 @@ export default function Post({ post, getPosts }) {
     post_link,
     post_title,
     post_url,
+    user_id,
     user_name,
     user_img_url,
   } = post;
@@ -22,17 +23,18 @@ export default function Post({ post, getPosts }) {
   const [comment, setComment] = useState(post_comment);
   const [editPost, setEditPost] = useState(false);
   const [newComment, setNewComment] = useState("");
-  const [isDisable, setIsDisable] = useState(false)
+  const [isDisable, setIsDisable] = useState(false);
+ 
   const { token } = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
   const inputRef = useRef(null);
 
-  
 
   function editComment(post_id) {
     setNewComment("");
     setEditPost(!editPost);
 
-      if (!newComment || newComment.trim().length === 0) {
+    if (!newComment || newComment.trim().length === 0) {
       return;
     }
 
@@ -47,24 +49,23 @@ export default function Post({ post, getPosts }) {
       body,
       config
     );
-    
-      setIsDisable(true)
+
+    setIsDisable(true);
 
     promise.then((res) => {
       setComment(newComment);
+      setIsDisable(false);
       setEditPost(false);
-      setIsDisable(false)
     });
     promise.catch((error) => {
-      setIsDisable(false)
-      setNewComment(newComment)
-      alert("Something wet wrong. Please, try again.")     
+      setIsDisable(false);
+      setNewComment(newComment);
+      alert("Something wet wrong. Please, try again.");
     });
   }
 
   function keyDown(e, post_id) {
     if (e.key === "Enter") {
-      setEditPost(false);
       editComment(post_id);
     }
     if (e.key === "Escape") {
@@ -73,6 +74,13 @@ export default function Post({ post, getPosts }) {
     }
   }
 
+  function sendEditPost(post_id) {
+    if (editPost) {
+      editComment(post_id);
+    } else {
+      setEditPost(true);
+    }
+  }
 
   useEffect(() => {
     if (editPost) {
@@ -91,10 +99,16 @@ export default function Post({ post, getPosts }) {
           />
           <p>{user_name}</p>
         </div>
-        <div className="buttons">
-          <BsPencil color="white" size={17} onClick={() => editComment(post_id)}/>
-          <DeletePost getPosts={getPosts} post_id={post_id} />
-        </div>
+        {user.id === user_id && (
+          <div className="buttons">
+            <BsPencil
+              color="white"
+              size={17}
+              onClick={() => sendEditPost(post_id)}
+            />
+            <DeletePost getPosts={getPosts} post_id={post_id} />
+          </div>
+        )}
       </div>
       {editPost ? (
         <input

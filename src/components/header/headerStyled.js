@@ -63,3 +63,19 @@ export const OptionsContainer = styled.div`
   top: 72px;
   width: 150px;
 `;
+
+export const SearchBar = styled.input`
+  width:30%;
+  height: 30px;
+  margin-top:17px;
+  border:none;
+  border-radius:3px;
+  outline: none;
+  ::placeholder{
+    font-family: "Lato";
+    font-size: 14px;
+    font-weight: 300;
+    color: #cecece;
+  }
+
+`

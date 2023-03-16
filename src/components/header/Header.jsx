@@ -4,6 +4,7 @@ import {
   HeaderDiv,
   LogoutButton,
   OptionsContainer,
+  SearchBar,
 } from "./headerStyled";
 import logo from "../../assets/linkr.png";
 import menu_vector from "../../assets/Vector (2).png";
@@ -40,6 +41,7 @@ export default function Header() {
     <HeaderContainer>
       <HeaderDiv showOptions={showOptions}>
         <img src={logo} alt="logo" />
+        <SearchBar type="search" placeholder="Search for people"/>
         <div>
           <img
             onClick={handleclick}
