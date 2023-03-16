@@ -4,16 +4,62 @@ import {
   HeaderDiv,
   LogoutButton,
   OptionsContainer,
-  SearchBar,
 } from "./headerStyled";
 import logo from "../../assets/linkr.png";
 import menu_vector from "../../assets/Vector (2).png";
 import { AuthContext } from "../../contexts/authContext";
+import { DebounceInput } from "react-debounce-input";
+import axios from "axios";
 
 export default function Header() {
-  const { user, logout } = useContext(AuthContext);
+  const { user, logout, token } = useContext(AuthContext);
   const [showOptions, setShowOptions] = useState(false);
+  const [isSearching, setIsSearching] = useState(false);
+  const [searchName, setSearchName] = useState("");
+  const [result, setResult] = useState([]);
   const logoutButtonRef = useRef();
+
+  function getUser(e) {
+    
+    setIsSearching(true);
+
+    const search = e.target.value
+
+    if(search === ""){
+      setIsSearching(false)
+      return
+    }
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    const promise = axios.get(
+      `${process.env.REACT_APP_API_URL}/users?search=${search}`,
+      config
+    );
+    promise.then((res) => {
+      console.log(res.data);
+      setResult(res.data);
+    });
+    promise.catch((error) => {
+      console.log(error.message);
+      setIsSearching(false);
+    });
+  }
+
+  function keyDown(e) {
+    if (e.key === "Enter") {
+      getUser();
+    }
+    if (e.key === "Escape") {
+      setSearchName("");
+      setIsSearching(false);
+    }
+  }
+
+ 
 
   const handleclick = (event) => {
     event.stopPropagation();
@@ -41,7 +87,27 @@ export default function Header() {
     <HeaderContainer>
       <HeaderDiv showOptions={showOptions}>
         <img src={logo} alt="logo" />
-        <SearchBar type="search" placeholder="Search for people"/>
+        <div className="searchBar">
+          <DebounceInput
+            minLength={3}
+            debounceTimeout={300}
+            placeholder="Search for people"
+            value={searchName}
+            onChange={(e) => getUser(e)}
+            onKeyDown={keyDown}          
+          />
+          {isSearching && (
+            <ul>
+              {result?.map((result) => (
+                <li key={result.id}>
+                  <img src={result.img_url} />
+                  <p>{result.name}</p>
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
+
         <div>
           <img
             onClick={handleclick}

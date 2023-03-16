@@ -27,6 +27,53 @@ export const HeaderDiv = styled.div`
     justify-content: center;
     margin-bottom: 20px;
   }
+  .searchBar {
+    display: block;
+    width: 50%;
+    margin-top: 17px;
+    input {
+      width: 100%;
+      height: 30px;
+      border: none;
+      border-radius: 3px;
+      outline: none;
+      ::placeholder {
+        font-family: "Lato";
+        font-size: 14px;
+        font-weight: 300;
+        color: #cecece;
+      }
+    }
+    ul {
+      font-family: "Lato";
+      font-size: 18px;
+      font-weight: 400;
+      color: #515151;
+      background-color: #e7e7e7;
+      width: 100%;
+      /* margin-left: 2px; */
+      margin-top: 2px;
+      height: auto;
+      border-radius: 3px;
+      padding: 3px;
+      li {
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px;
+        p{
+          margin-top: 15px;
+          margin-left: 5px;
+        }
+        img {
+          width: 39px;
+          height: 39px;
+          left: 454px;
+          border-radius: 50%;
+        }
+      }
+    }
+  }
+
   .menu {
     width: 20px;
     height: 15px;
@@ -63,19 +110,3 @@ export const OptionsContainer = styled.div`
   top: 72px;
   width: 150px;
 `;
-
-export const SearchBar = styled.input`
-  width:30%;
-  height: 30px;
-  margin-top:17px;
-  border:none;
-  border-radius:3px;
-  outline: none;
-  ::placeholder{
-    font-family: "Lato";
-    font-size: 14px;
-    font-weight: 300;
-    color: #cecece;
-  }
-
-`
