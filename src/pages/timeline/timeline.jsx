@@ -146,7 +146,7 @@ export default function TimelinePage() {
             <Message>There are no posts yet</Message>
           ) : (
             <PostsList>
-              {posts.map((post) => {
+              {posts?.map((post) => {
                 return (
                   <Post
                     key={post.post_id}
