@@ -22,6 +22,10 @@ import {
       const { token } = useContext(AuthContext);      
       const [trends, setTrends] = useState(undefined)  ;
       
+
+      function navigateTrends(hashtag){
+        navigate(`/hashtag/${hashtag}`)    
+      }
   
       useEffect(() => {
           const config = {
@@ -101,7 +105,7 @@ import {
             <div className="linha"></div>
             <ul>
             {trends?.map((trend) => (
-                <li key={trend.trendName}># {trend.trendName}</li>
+                <li key={trend.trendName} onClick={() => navigateTrends(trend.trendName)}># {trend.trendName}</li>
             ))}  
             </ul>
             </HashtagBox>
