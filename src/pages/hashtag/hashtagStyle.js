@@ -18,6 +18,14 @@ export const Timeline = styled.div`
     margin-right: 0px;
   }
 `
+export const Message = styled.div`
+  margin-top: 80px;
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 300;
+  font-size: 30px;
+  color: #ffffff;
+`;
 
 export const PostsList = styled.ul`
   margin-top: 25px;
