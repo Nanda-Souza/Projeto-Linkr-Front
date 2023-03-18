@@ -5,6 +5,8 @@ import Heart from "../heart/Heart";
 import { useState, useContext, useRef, useEffect } from "react";
 import axios from "axios";
 import { AuthContext } from "../../contexts/authContext";
+import { ReactTagify } from "react-tagify";
+import { useNavigate } from "react-router";
 
 export default function Post({ post, getPosts }) {
   const {
@@ -28,6 +30,11 @@ export default function Post({ post, getPosts }) {
   const { token } = useContext(AuthContext);
   const { user } = useContext(AuthContext);
   const inputRef = useRef(null);
+  const navigate = useNavigate();
+  const tagStyle = {    
+    fontWeight: 'bold',
+    cursor: 'pointer'
+  };
 
 
   function editComment(post_id) {
@@ -82,6 +89,13 @@ export default function Post({ post, getPosts }) {
     }
   }
 
+  function navigateTrends(tag){
+    const hashtag = tag.replace('#','')
+    
+    navigate(`/hashtag/${hashtag}`) 
+    
+  }
+
   useEffect(() => {
     if (editPost) {
       inputRef.current.focus();
@@ -121,7 +135,12 @@ export default function Post({ post, getPosts }) {
           onKeyDown={(e) => keyDown(e, post_id)}
         />
       ) : (
-        <p className="description_post">{comment}</p>
+        <ReactTagify
+          tagStyle={tagStyle}
+          tagClicked={(tag) => navigateTrends(tag)}
+        >
+          <p className="description_post">{comment}</p>
+        </ReactTagify>
       )}
       <a href={post_link} target="_blank">
         <LinkPost>
