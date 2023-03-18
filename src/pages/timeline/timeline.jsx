@@ -14,6 +14,7 @@ import Post from "../../components/post/Post";
 import { HashtagBox } from "../../components/hashtag";
 import { useNavigate } from "react-router";
 
+
 export default function TimelinePage() {
   const { user } = useContext(AuthContext);
   const { token } = useContext(AuthContext);
