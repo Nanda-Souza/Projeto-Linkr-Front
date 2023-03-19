@@ -49,6 +49,7 @@ export default function TimelinePage() {
       setButton("Publish");
       setLoading(false);
       getPosts();
+      getTrends();
     });
     promise.catch((err) => {
       alert("There was an error publishing your link");
