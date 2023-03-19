@@ -29,8 +29,9 @@ export const HeaderDiv = styled.div`
   }
   .searchBar {
     display: block;
-    width: 50%;
+    width: 40%;
     margin-top: 17px;
+    margin-left: 10px;
     input {
       width: 100%;
       height: 30px;
