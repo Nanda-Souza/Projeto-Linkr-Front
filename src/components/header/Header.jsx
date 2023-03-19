@@ -20,14 +20,13 @@ export default function Header() {
   const logoutButtonRef = useRef();
 
   function getUser(e) {
-    
     setIsSearching(true);
 
-    const search = e.target.value
+    const search = e.target.value;
 
-    if(search === ""){
-      setIsSearching(false)
-      return
+    if (search === "") {
+      setIsSearching(false);
+      return;
     }
 
     const config = {
@@ -58,8 +57,6 @@ export default function Header() {
       setIsSearching(false);
     }
   }
-
- 
 
   const handleclick = (event) => {
     event.stopPropagation();
@@ -94,20 +91,23 @@ export default function Header() {
             placeholder="Search for people"
             value={searchName}
             onChange={(e) => getUser(e)}
-            onKeyDown={keyDown}          
+            onKeyDown={keyDown}
           />
-          {isSearching && (
+          {isSearching ? (
             <ul>
-              {result?.map((result) => (
-                <li key={result.id}>
-                  <img src={result.img_url} />
-                  <p>{result.name}</p>
-                </li>
-              ))}
+              {result?.length ? (
+                result.map((result) => (
+                  <li key={result.id}>
+                    <img src={result.img_url} />
+                    <p>{result.name}</p>
+                  </li>
+                ))
+              ) : (
+                <p>No results</p>
+              )}
             </ul>
-          )}
+          ) : null}
         </div>
-
         <div>
           <img
             onClick={handleclick}
