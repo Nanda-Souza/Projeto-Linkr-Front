@@ -14,15 +14,11 @@ function likePostReq(isLiked, postId, token) {
       }
     );
   } else {
-    return axios.delete(
-      `${BASE_URL}/like`,
-      { postId: Number(postId) },
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
+    return axios.delete(`${BASE_URL}/like/${postId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
   }
 }
 

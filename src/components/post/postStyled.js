@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 export const PostStyled = styled.li`
+position: relative;
   margin-bottom: 20px;
   margin-top: 25px;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);

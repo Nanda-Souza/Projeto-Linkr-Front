@@ -20,6 +20,7 @@ export default function Post({ post, getPosts }) {
     user_id,
     user_name,
     user_img_url,
+    likeInfo
   } = post;
 
   const [comment, setComment] = useState(post_comment);
@@ -124,6 +125,7 @@ export default function Post({ post, getPosts }) {
           </div>
         )}
       </div>
+      <Heart likeInfo={likeInfo}/>
       {editPost ? (
         <input
           className="edit_comment"
@@ -152,6 +154,7 @@ export default function Post({ post, getPosts }) {
           <img src={post_image} alt="" className="link_img" />
         </LinkPost>
       </a>
+      
     </PostStyled>
   );
 }
