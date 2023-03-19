@@ -14,7 +14,7 @@ export const HeaderDiv = styled.div`
   top: 0;
   left: 0;
   right: 0;
-
+  z-index: 2;
   img {
     margin-top: 17px;
     margin-left: 20px;

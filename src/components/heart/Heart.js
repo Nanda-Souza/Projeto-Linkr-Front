@@ -4,23 +4,36 @@ import { useState, useEffect, useContext } from "react";
 import likePostReq from "../../services/apiPost";
 import { AuthContext } from "../../contexts/authContext";
 export default function Heart(props){
-    //passar infos que vão vir da requisição da timeline como props
+    
     const { user } = useContext(AuthContext); 
     const {token} = useContext(AuthContext);
-    const {likeInfo} = props //precisa so passar o likeInfo que vai vir junto coms as infos do post, aqui eu to recebendo
-    const {post_id, total_likes, users_liked, has_liked} = likeInfo //aqui desestruturei a likeInfo
-    const [likesNumber, setLikesNumber] = useState(total_likes) //numero de likes do post q vai aparecer pro usuario
-    const [isLiked, setIsLiked] = useState(has_liked) //booleando q vai dizer se o usuario curtiu o post
-    const [heart, setHeart] = useState(<AiOutlineHeart style={{ color: 'white' }}/>) //conteudo dentro do botao de like. Vai mudar o icone e cor se tiver curtido pelo usuario ou nao
-    useEffect(isLiked ? setHeart(<AiFillHeart style={{ color: 'red' }}/>) : setHeart(<AiOutlineHeart style={{ color: 'white' }}/>),[isLiked]) // essa funcao deve mudar o react-icon quando isLiked mudar
-    function likePost(){
-    likePostReq(isLiked, post_id, token);
-    isLiked ? setLikesNumber(likesNumber-1) : setLikesNumber(likesNumber+1);
+    const {post_id, total_likes, users_liked, has_liked} = props.likeInfo 
+    const [likesNumber, setLikesNumber] = useState(total_likes) 
+    const [isLiked, setIsLiked] = useState(has_liked) 
+    const [heart, setHeart] = useState(<AiOutlineHeart style={{ color: 'white', fontSize: '22px', cursor: 'pointer'  }}/>) 
+    useEffect(() => {
+        if (isLiked) {
+          setHeart(<AiFillHeart style={{ color: '#AC0000', fontSize: '22px', cursor: 'pointer'  }} />);
+        } else {
+          setHeart(<AiOutlineHeart style={{ color: 'white', fontSize: '22px' , cursor: 'pointer' }} />);
+        }
+      }, [isLiked]);
+    function thenFunc(){
+        isLiked ? setLikesNumber(likesNumber-1) : setLikesNumber(likesNumber+1);
     setIsLiked(!isLiked)
-}// essa funcao vai fazer a requisição pra dar like no post. Vai alterar o numero de likes do post (likesNumber) e vai alternar o estado do isLiked
-    return (<HeartStyled> //heartStyled.js é a div q vai conter o botao
-    <button onClick={likePost}>{heart}</button> // esse é o botao do coracao, heart é o icone, likePost é a função
-    </HeartStyled>)
+    }
+    function likePost(){
+    likePostReq(isLiked, post_id, token).then(thenFunc).catch((e) => console.log(e));
+}
+    return (<HeartStyled>
+        <div className="heart-container" onClick={likePost}>
+          {heart}
+        </div>
+        <p className="plike">
+  {Number(likesNumber)} {Number(likesNumber) <= 1 ? 'like' : 'likes'}
+</p>
+
+      </HeartStyled>)
 }
 
 //seguinte codigo é pra configurar a janela q aparece qnd passa o mouse em cima. Recomendaram a biblioteca tooltips
@@ -44,13 +57,13 @@ export default function Heart(props){
 
 // let likesText;
 // if (total_likes > 3) {
-//   likesText = `${likedBy[0]}, ${likedBy[1]} e outras ${total_likes - 2} curtiram`;
+//   likesText = `${likedBy[0]}, ${likedBy[1]} e outras ${total_likes - 2} pessoas`;
 // } else if (total_likes === 3) {
-//   likesText = `${likedBy[0]}, ${likedBy[1]} e ${likedBy[2]} curtiram`;
+//   likesText = `${likedBy[0]}, ${likedBy[1]} e ${likedBy[2]}`;
 // } else if (total_likes === 2) {
-//   likesText = `${likedBy[0]} e ${likedBy[1]} curtiram`;
+//   likesText = `${likedBy[0]} e ${likedBy[1]}`;
 // } else if (total_likes === 1) {
-//   likesText = `${likedBy[0]} curtiu`;
+//   likesText = `${likedBy[0]}`;
 // } else {
 //   likesText = "Ninguém curtiu";
 // } // essas condicionais vao alterar o texto que aparece baseado no numero de likes do post
