@@ -64,10 +64,5 @@ export default function Heart(props) {
   </HeartStyled>)
 }
 
-//seguinte codigo é pra configurar a janela q aparece qnd passa o mouse em cima. Recomendaram a biblioteca tooltips
 
-// const [janelaVisivel, setJanelaVisivel] = useState('');
-//<button
-//onMouseEnter={() => setJanelaVisivel('componente da janelinha')}
-//onMouseLeave={() => setJanelaVisivel('')}
 

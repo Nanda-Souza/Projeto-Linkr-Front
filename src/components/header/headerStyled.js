@@ -33,6 +33,7 @@ export const HeaderDiv = styled.div`
     margin-top: 17px;
     margin-left: 10px;
     input {
+      padding-left: 10px;
       width: 100%;
       height: 30px;
       border: none;
@@ -61,6 +62,7 @@ export const HeaderDiv = styled.div`
         display: flex;
         align-items: center;
         margin-bottom: 10px;
+        cursor: pointer;
         p{
           margin-top: 15px;
           margin-left: 5px;
@@ -86,6 +88,7 @@ export const HeaderDiv = styled.div`
     width: 40px;
     height: 40px;
     border-radius: 20px;
+    cursor: pointer;
   }
 `;
 

@@ -21,6 +21,8 @@ position: relative;
       height: 40px;
       border-radius: 50%;
       margin-top: 10px;
+      object-fit: cover;
+      cursor: pointer;
     }
     p {
       margin-top: 10px;
@@ -30,6 +32,7 @@ position: relative;
       font-weight: 400;
       font-size: 20px;
       color: #ffffff;
+      cursor: pointer;
     }
   }
   .description_post {

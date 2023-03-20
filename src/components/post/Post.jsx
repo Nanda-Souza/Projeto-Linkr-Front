@@ -22,7 +22,6 @@ export default function Post({ post, getPosts }) {
     user_img_url,
     likeInfo
   } = post;
-
   const [comment, setComment] = useState(post_comment);
   const [editPost, setEditPost] = useState(false);
   const [newComment, setNewComment] = useState("");
@@ -111,8 +110,9 @@ export default function Post({ post, getPosts }) {
             src={user_img_url}
             alt="profile_picture"
             className="profile_picture_post"
+            onClick={() => navigate(`/user/${user_id}`) }
           />
-          <p>{user_name}</p>
+          <p onClick={() => navigate(`/user/${user_id}`) }>{user_name}</p>
         </div>
         {user.id === user_id && (
           <div className="buttons">

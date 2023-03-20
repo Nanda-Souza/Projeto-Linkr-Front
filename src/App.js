@@ -5,6 +5,7 @@ import SignUpPage from "./pages/signUp/signUpPage";
 import TimelinePage from "./pages/timeline/timeline";
 import HashtagPage from "./pages/hashtag/hashtag";
 import Modal from "react-modal";
+import UserProfile from "./pages/UserProfile";
 
 Modal.setAppElement("#root");
 
@@ -18,6 +19,7 @@ function App() {
             <Route path="/sign-up" element={<SignUpPage />}></Route>
             <Route path="/timeline" element={<TimelinePage />}></Route>
             <Route path="/hashtag/:hashtag" element={<HashtagPage />}></Route>
+            <Route path="/user/:id" element={<UserProfile />}></Route>
           </Routes>
         </AuthProvider>
       </BrowserRouter>
