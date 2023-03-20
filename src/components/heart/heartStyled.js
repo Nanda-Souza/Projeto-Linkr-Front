@@ -10,7 +10,7 @@ export const HeartStyled = styled.div`
   z-index: 3;
   padding: 0;
   display: flex;
-  flex-direction: column; /* adicionado */
+  flex-direction: column; 
   text-align: center;
   div {
     margin: 0;
@@ -25,8 +25,19 @@ export const HeartStyled = styled.div`
     color: #FFFFFF;
     margin-top: 5px;
     white-space: nowrap;
-    margin-left: auto; /* adicionado */
-    margin-right: auto; /* adicionado */
-    margin-top: 10px; /* adicionado */
+    margin-left: auto; 
+    margin-right: auto; 
+    margin-top: 10px; 
+    cursor: default;
+  }
+  .box{
+    background: rgba(255, 255, 255, 0.9);
+border-radius: 3px;
+    font-family: 'Lato';
+font-style: normal;
+font-weight: 700;
+font-size: 13px;
+line-height: 13px;
+color: #505050;
   }
 `;
