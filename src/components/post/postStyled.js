@@ -81,6 +81,7 @@ export const LinkPost = styled.div`
     width: 153px;
     height: 156px;
     border-radius: 0px 10px 10px 0px;
+    object-fit: cover;
   }
   .link_details {
     height:120px;
