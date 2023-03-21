@@ -53,13 +53,13 @@ export default function Heart(props) {
   useEffect(setText, [likesNumber]) // adicionar funçao semelhante com likesNumber de dependencia q adiciona ou remove voce, ve o tamanho do likedBy
   
   return (<HeartStyled>
-    <div className="heart-container" onClick={likePost}>
+    <div className="heart-container" onClick={likePost} data-test="like-btn">
       {heart}
     </div>
-    <p data-tooltip-id={post_id} data-tooltip-content={likesText} className="plike">
+    <p data-tooltip-id={post_id} data-tooltip-content={likesText} className="plike" data-test="counter">
       {Number(likesNumber)} {Number(likesNumber) <= 1 ? 'like' : 'likes'}
     </p>
-    <ReactTooltip className="box" id={post_id} place="bottom" />
+    <ReactTooltip className="box" id={post_id} place="bottom" data-test="tooltip"/>
 
   </HeartStyled>)
 }

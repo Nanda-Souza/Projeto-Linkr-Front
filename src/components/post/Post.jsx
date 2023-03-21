@@ -117,6 +117,7 @@ export default function Post({ post, getPosts }) {
         {user.id === user_id && (
           <div className="buttons">
             <BsPencil
+            data-test="edit-btn"
               color="white"
               size={17}
               onClick={() => sendEditPost(post_id)}
@@ -128,6 +129,7 @@ export default function Post({ post, getPosts }) {
       <Heart likeInfo={likeInfo}/>
       {editPost ? (
         <input
+        data-test="edit-input"
           className="edit_comment"
           type="text"
           ref={inputRef}

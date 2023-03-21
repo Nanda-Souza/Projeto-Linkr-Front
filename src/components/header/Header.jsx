@@ -94,12 +94,13 @@ export default function Header() {
             value={searchName}
             onChange={(e) => getUser(e)}
             onKeyDown={keyDown}
+            data-test="search"
           />
           {isSearching ? (
             <ul>
               {result?.length ? (
                 result.map((result) => (
-                  <li onClick={() => navigate(`/user/${result.id}`) } key={result.id}>
+                  <li onClick={() => navigate(`/user/${result.id}`) } key={result.id} data-test="user-search">
                     <img src={result.img_url} />
                     <p>{result.name}</p>
                   </li>
