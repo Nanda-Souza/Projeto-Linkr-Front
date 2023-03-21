@@ -93,7 +93,7 @@ import {
           </div>
         </Header>
         <Timeline>
-          <p>#{hashtag}</p>
+          <p data-test="hashtag-title">#{hashtag}</p>
           
             
           {loadingApi ? (
@@ -105,6 +105,7 @@ import {
               {postTrends.map((post) => {
                 return (
                   <Post
+                    data-test="post"
                     key={post.post_id}
                     post={post}
                     getPosts={getPostsTrends}
@@ -113,12 +114,12 @@ import {
               })}
             </PostsList>
           )}
-            <HashtagBox>
+            <HashtagBox data-test="trending">
             <h1>trending</h1>
             <div className="linha"></div>
             <ul>
             {trends?.map((trend) => (
-                <li key={trend.trendName} onClick={() => navigateTrends(trend.trendName)}># {trend.trendName}</li>
+                <li key={trend.trendName} onClick={() => navigateTrends(trend.trendName)} data-test="hashtag"># {trend.trendName}</li>
             ))}  
             </ul>
             </HashtagBox>
