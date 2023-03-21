@@ -10,6 +10,7 @@ import menu_vector from "../../assets/Vector (2).png";
 import { AuthContext } from "../../contexts/authContext";
 import { DebounceInput } from "react-debounce-input";
 import axios from "axios";
+import { useNavigate } from "react-router";
 
 export default function Header() {
   const { user, logout, token } = useContext(AuthContext);
@@ -18,6 +19,7 @@ export default function Header() {
   const [searchName, setSearchName] = useState("");
   const [result, setResult] = useState([]);
   const logoutButtonRef = useRef();
+  const navigate = useNavigate();
 
   function getUser(e) {
     setIsSearching(true);
@@ -97,7 +99,7 @@ export default function Header() {
             <ul>
               {result?.length ? (
                 result.map((result) => (
-                  <li key={result.id}>
+                  <li onClick={() => navigate(`/user/${result.id}`) } key={result.id}>
                     <img src={result.img_url} />
                     <p>{result.name}</p>
                   </li>
