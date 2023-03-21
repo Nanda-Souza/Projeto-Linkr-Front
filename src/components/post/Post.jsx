@@ -103,7 +103,7 @@ export default function Post({ post, getPosts }) {
   }, [editPost]);
 
   return (
-    <PostStyled key={post_id}>
+    <PostStyled key={post_id}  data-test="post">
       <div className="header_post">
         <div className="info">
           <img
