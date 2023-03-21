@@ -13,7 +13,7 @@ import Header from "../../components/header/Header";
 import Post from "../../components/post/Post";
 import { HashtagBox } from "../../components/hashtag";
 import { useNavigate } from "react-router";
-
+import { Link } from "react-router-dom";
 
 export default function TimelinePage() {
   const { user } = useContext(AuthContext);
@@ -24,7 +24,7 @@ export default function TimelinePage() {
   const [url, setUrl] = useState("");
   const [description, setDescription] = useState("");
   const [posts, setPosts] = useState([]);
-  const [trends, setTrends] = useState(undefined)  
+  const [trends, setTrends] = useState(undefined);
   const navigate = useNavigate();
 
   function createPost(e) {
@@ -86,18 +86,18 @@ export default function TimelinePage() {
         Authorization: `Bearer ${token}`,
       },
     };
-    const URL = `${process.env.REACT_APP_API_URL}/top-trending`;        
+    const URL = `${process.env.REACT_APP_API_URL}/top-trending`;
     const promise = axios.get(URL, config);
     promise.then((res) => {
       setTrends(res.data);
     });
-    promise.catch(error => {
+    promise.catch((error) => {
       console.log(error.message);
-  });  
+    });
   }
 
-  function navigateTrends(hashtag){
-    navigate(`/hashtag/${hashtag}`)    
+  function navigateTrends(hashtag) {
+    navigate(`/hashtag/${hashtag}`);
   }
 
   useEffect(() => {
@@ -110,7 +110,9 @@ export default function TimelinePage() {
       <Header></Header>
 
       <Timeline>
-        <img src={timeline} alt="" />
+        <Link to="/timeline">
+          <img src={timeline} alt="" />
+        </Link>
         <BoxCreatePost data-test="publish-box">
           <div>
             <img
@@ -132,7 +134,7 @@ export default function TimelinePage() {
               disabled={loading}
             />
             <input
-              data-test="description" 
+              data-test="description"
               type="text"
               className="description"
               placeholder="Description"
@@ -140,40 +142,39 @@ export default function TimelinePage() {
               onChange={(e) => setDescription(e.target.value)}
               disabled={loading}
             />
-            <button 
-            data-test="publish-btn"
-            type="submit" disabled={loading}>
+            <button data-test="publish-btn" type="submit" disabled={loading}>
               {button}
             </button>
           </Form>
-          {loadingApi ? (
-            <Message>Loading...</Message>
-          ) : posts.length === 0 ? (
-            <Message>There are no posts yet</Message>
-          ) : (
-            <PostsList>
-              {posts?.map((post) => {
-                return (
-                  <Post
-                    data-test="post"
-                    key={post.post_id}
-                    post={post}
-                    getPosts={getPosts}
-                  ></Post>
-                );
-              })}
-            </PostsList>
-          )}
         </BoxCreatePost>
+        {loadingApi ? (
+          <Message>Loading...</Message>
+        ) : posts.length === 0 ? (
+          <Message data-test="message">There are no posts yet</Message>
+        ) : (
+          <PostsList>
+            {posts?.map((post) => {
+              return (
+                <Post key={post.post_id} post={post} getPosts={getPosts}></Post>
+              );
+            })}
+          </PostsList>
+        )}
         <HashtagBox data-test="trending">
-            <h1>trending</h1>
-            <div className="linha"></div>
-            <ul>
+          <h1>trending</h1>
+          <div className="linha"></div>
+          <ul>
             {trends?.map((trend) => (
-                <li key={trend.trendName} onClick={() => navigateTrends(trend.trendName)} data-test="hashtag"># {trend.trendName}</li>
-            ))}  
-            </ul>
-            </HashtagBox>
+              <li
+                key={trend.trendName}
+                onClick={() => navigateTrends(trend.trendName)}
+                data-test="hashtag"
+              >
+                # {trend.trendName}
+              </li>
+            ))}
+          </ul>
+        </HashtagBox>
       </Timeline>
     </>
   );
