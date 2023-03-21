@@ -11,6 +11,7 @@ import { AuthContext } from "../../contexts/authContext";
 import { DebounceInput } from "react-debounce-input";
 import axios from "axios";
 import { useNavigate } from "react-router";
+import { Link } from "react-router-dom";
 
 export default function Header() {
   const { user, logout, token } = useContext(AuthContext);
@@ -85,7 +86,9 @@ export default function Header() {
   return (
     <HeaderContainer>
       <HeaderDiv showOptions={showOptions}>
+      <Link to="/timeline">
         <img src={logo} alt="logo" />
+        </Link>
         <div className="searchBar">
           <DebounceInput
             minLength={3}

@@ -41,7 +41,7 @@ export default function TimelinePage() {
       config
     );
     setLoading(true);
-    setButton("Publishing");
+    setButton("Publishing...");
     promise.then((res) => {
       alert("Post created!");
       setUrl("");
@@ -109,10 +109,8 @@ export default function TimelinePage() {
     <>
       <Header></Header>
 
-      <Timeline>
-        <Link to="/timeline">
+      <Timeline>        
           <img src={timeline} alt="" />
-        </Link>
         <BoxCreatePost data-test="publish-box">
           <div>
             <img
