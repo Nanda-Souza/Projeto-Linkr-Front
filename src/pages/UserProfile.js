@@ -88,7 +88,7 @@ import styled from "styled-components";
               <UserTitle><img src={posts[0].user_img_url} alt={'Foto de perfil'}/>
               <h1>{posts[0].user_name}'s posts</h1>
               </UserTitle>
-              <UserPosts>
+              <UserPosts data-test="post">
                 
                 {posts?.map((post) => {
                   return (
