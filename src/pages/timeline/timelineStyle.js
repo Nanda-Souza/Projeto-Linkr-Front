@@ -91,6 +91,7 @@ export const Form = styled.form`
   .description {
     margin-top: 10px;
     height: 70px;
+  
   }
   button {
     margin-top: 10px;
