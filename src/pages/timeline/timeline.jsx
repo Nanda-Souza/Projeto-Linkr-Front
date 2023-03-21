@@ -111,7 +111,7 @@ export default function TimelinePage() {
 
       <Timeline>
         <img src={timeline} alt="" />
-        <BoxCreatePost>
+        <BoxCreatePost data-test="publish-box">
           <div>
             <img
               src={user.img_url}
@@ -122,6 +122,7 @@ export default function TimelinePage() {
           </div>
           <Form onSubmit={createPost}>
             <input
+              data-test="link"
               type="text"
               className="url"
               placeholder="https://..."
@@ -131,6 +132,7 @@ export default function TimelinePage() {
               disabled={loading}
             />
             <input
+              data-test="description" 
               type="text"
               className="description"
               placeholder="Description"
@@ -138,7 +140,9 @@ export default function TimelinePage() {
               onChange={(e) => setDescription(e.target.value)}
               disabled={loading}
             />
-            <button type="submit" disabled={loading}>
+            <button 
+            data-test="publish-btn"
+            type="submit" disabled={loading}>
               {button}
             </button>
           </Form>
@@ -151,6 +155,7 @@ export default function TimelinePage() {
               {posts?.map((post) => {
                 return (
                   <Post
+                    data-test="post"
                     key={post.post_id}
                     post={post}
                     getPosts={getPosts}

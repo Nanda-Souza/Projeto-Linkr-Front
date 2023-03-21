@@ -112,7 +112,7 @@ export default function Post({ post, getPosts }) {
             className="profile_picture_post"
             onClick={() => navigate(`/user/${user_id}`) }
           />
-          <p onClick={() => navigate(`/user/${user_id}`) }>{user_name}</p>
+          <p  data-test="username" onClick={() => navigate(`/user/${user_id}`) }>{user_name}</p>
         </div>
         {user.id === user_id && (
           <div className="buttons">
@@ -141,11 +141,11 @@ export default function Post({ post, getPosts }) {
           tagStyle={tagStyle}
           tagClicked={(tag) => navigateTrends(tag)}
         >
-          <p className="description_post">{comment}</p>
+          <p  data-test="description" className="description_post">{comment}</p>
         </ReactTagify>
       )}
       <a href={post_link} target="_blank">
-        <LinkPost>
+        <LinkPost data-test="link">
           <div className="link_details">
             <h1>{post_title}</h1>
             <h2>{post_description}</h2>
