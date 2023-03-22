@@ -146,8 +146,8 @@ export default function Post({ post, getPosts }) {
           <p  data-test="description" className="description_post">{comment}</p>
         </ReactTagify>
       )}
-      <a href={post_link} target="_blank">
-        <LinkPost data-test="link">
+      <a href={post_link} target="_blank" data-test="link">
+        <LinkPost>
           <div className="link_details">
             <h1>{post_title}</h1>
             <h2>{post_description}</h2>
