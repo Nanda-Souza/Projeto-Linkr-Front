@@ -6,8 +6,10 @@ import apiAuth from "../services/apiAuth";
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
-  const [token, setToken] = useState(null);
+  const recoveredUser = localStorage.getItem("user");
+  const recoveredToken = localStorage.getItem("tokenUser");
+  const [user, setUser] = useState(JSON.parse(recoveredUser));
+  const [token, setToken] = useState(JSON.parse(recoveredToken));
   const navigate = useNavigate();
 
   function login(data) {

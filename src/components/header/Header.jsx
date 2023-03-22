@@ -61,8 +61,8 @@ export default function Header() {
     }
   }
 
-  function userPage(id){
-    navigate(`/user/${id}`)
+  function userPage(id) {
+    navigate(`/user/${id}`);
   }
 
   const handleclick = (event) => {
@@ -90,8 +90,8 @@ export default function Header() {
   return (
     <HeaderContainer>
       <HeaderDiv showOptions={showOptions}>
-      <Link to="/timeline">
-        <img src={logo} alt="logo" />
+        <Link to="/timeline">
+          <img src={logo} alt="logo" />
         </Link>
         <div className="searchBar">
           <DebounceInput
@@ -107,7 +107,11 @@ export default function Header() {
             <ul>
               {result?.length ? (
                 result.map((result) => (
-                  <li onClick={() => navigate(`/user/${result.id}`)} key={result.id} data-test="user-search">
+                  <li
+                    onClick={() => navigate(`/user/${result.id}`)}
+                    key={result.id}
+                    data-test="user-search"
+                  >
                     <img src={result.img_url} />
                     <p>{result.name}</p>
                   </li>
@@ -128,7 +132,7 @@ export default function Header() {
           <img
             data-test="avatar"
             onClick={handleclick}
-            src={user.img_url}
+            src={user?.img_url || "https://i.imgur.com/6VBx3io.png"}
             alt="profile_picture"
             className="profile_picture"
           />

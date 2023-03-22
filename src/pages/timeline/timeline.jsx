@@ -14,7 +14,6 @@ import Post from "../../components/post/Post";
 import { HashtagBox } from "../../components/hashtag";
 import { useNavigate } from "react-router";
 
-
 export default function TimelinePage() {
   const { user } = useContext(AuthContext);
   const { token } = useContext(AuthContext);
@@ -109,12 +108,13 @@ export default function TimelinePage() {
     <>
       <Header></Header>
 
-      <Timeline>        
-          <img src={timeline} alt="" />
+      <Timeline>
+        <img src={timeline} alt="" />
         <BoxCreatePost data-test="publish-box">
           <div>
             <img
-              src={user.img_url}
+              // src is user.img_url if user is logged in, else src is default profile picture
+              src={user?.img_url || "https://i.imgur.com/6VBx3io.png"}
               alt="profile_picture"
               className="profile_picture"
             />
