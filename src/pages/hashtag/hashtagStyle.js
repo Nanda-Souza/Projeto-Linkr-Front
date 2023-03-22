@@ -13,6 +13,13 @@ export const Timeline = styled.div`
     color: #FFFFFF;
     margin-left: 15px;
   }
+  h1{
+    weight: 700;
+    font-size: 41px;
+    font-family: 'Oswald', sans-serif;
+    color: #FFFFFF;
+    margin-left: 15px;
+  }
   @media (max-width: 600px) {
     margin-left: 0px;
     margin-right: 0px;

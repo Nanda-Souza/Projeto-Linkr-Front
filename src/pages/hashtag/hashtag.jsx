@@ -93,7 +93,7 @@ import {
           </div>
         </Header>
         <Timeline>
-          <p data-test="hashtag-title">#{hashtag}</p>
+          <h1 data-test="hashtag-title">#{hashtag}</h1>
           
             
           {loadingApi ? (
