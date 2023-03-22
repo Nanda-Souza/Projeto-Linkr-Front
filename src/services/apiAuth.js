@@ -2,6 +2,14 @@ import axios from "axios";
 
 const BASE_URL = process.env.REACT_APP_API_URL;
 
+function authToken(token) {
+  return {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+}
+
 function singUp(body) {
   console.log("url: " + BASE_URL);
   return axios.post(`${BASE_URL}/sign-up`, body);
@@ -12,11 +20,7 @@ function signIn(body) {
 }
 
 function getUser(token) {
-  return axios.get(`${BASE_URL}/users/me`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
+  return axios.get(`${BASE_URL}/users/me`, authToken(token));
 }
 
 const apiAuth = {
