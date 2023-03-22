@@ -11,7 +11,7 @@ import {
 } from "./signInPageStyled";
 
 export default function SignInPage() {
-  const { login, setUser, setToken } = useContext(AuthContext);
+  const { login, token } = useContext(AuthContext);
   const [disabled, setDisabled] = useState(false);
   const [body, setBody] = useState({
     email: "",
@@ -19,15 +19,10 @@ export default function SignInPage() {
   });
 
   useEffect(() => {
-    const recoveredUser = localStorage.getItem("user");
-    const recoveredToken = localStorage.getItem("tokenUser");
-
-    if (recoveredUser && recoveredToken) {
-      setUser(JSON.parse(recoveredUser));
-      setToken(JSON.parse(recoveredToken));
-      login({ token: JSON.parse(recoveredToken) });
+    if (token) {
+      login({ token: token });
     }
-  }, []);
+  }, [token]);
 
   function handleSubmit(e) {
     e.preventDefault();
