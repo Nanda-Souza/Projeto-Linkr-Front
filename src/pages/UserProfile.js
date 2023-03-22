@@ -16,13 +16,8 @@ import styled from "styled-components";
   
   
   export default function UserProfile() {
-    const { user } = useContext(AuthContext);
     const { token } = useContext(AuthContext);
-    const [button, setButton] = useState("Publish");
-    const [loading, setLoading] = useState(false);
     const [loadingApi, setLoadingApi] = useState(true);
-    const [url, setUrl] = useState("");
-    const [description, setDescription] = useState("");
     const [posts, setPosts] = useState([]);
     const [trends, setTrends] = useState(undefined)  
     const navigate = useNavigate();
@@ -71,7 +66,7 @@ import styled from "styled-components";
     useEffect(() => {
       getPosts();
       getTrends();
-    }, []);
+    }, [id]);
   
     return (
       <>

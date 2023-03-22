@@ -13,7 +13,7 @@ import Header from "../../components/header/Header";
 import Post from "../../components/post/Post";
 import { HashtagBox } from "../../components/hashtag";
 import { useNavigate } from "react-router";
-import { Link } from "react-router-dom";
+
 
 export default function TimelinePage() {
   const { user } = useContext(AuthContext);

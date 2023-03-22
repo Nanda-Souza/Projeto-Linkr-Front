@@ -53,7 +53,6 @@ export const HeaderDiv = styled.div`
       color: #515151;
       background-color: #e7e7e7;
       width: 100%;
-      /* margin-left: 2px; */
       margin-top: 2px;
       height: auto;
       border-radius: 3px;
@@ -63,7 +62,7 @@ export const HeaderDiv = styled.div`
         align-items: center;
         margin-bottom: 10px;
         cursor: pointer;
-        p{
+        p {
           margin-top: 15px;
           margin-left: 5px;
         }
