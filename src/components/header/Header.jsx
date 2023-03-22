@@ -61,6 +61,10 @@ export default function Header() {
     }
   }
 
+  function userPage(id){
+    navigate(`/user/${id}`)
+  }
+
   const handleclick = (event) => {
     event.stopPropagation();
     setShowOptions(!showOptions);
@@ -103,7 +107,7 @@ export default function Header() {
             <ul>
               {result?.length ? (
                 result.map((result) => (
-                  <li onClick={() => navigate(`/user/${result.id}`) } key={result.id} data-test="user-search">
+                  <li onClick={() => navigate(`/user/${result.id}`)} key={result.id} data-test="user-search">
                     <img src={result.img_url} />
                     <p>{result.name}</p>
                   </li>

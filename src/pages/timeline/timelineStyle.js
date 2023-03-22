@@ -80,10 +80,8 @@ export const Form = styled.form`
     border: none;
     margin-left: 60px;
     font-family: "Lato";
-    font-style: normal;
     font-weight: 300;
     font-size: 15px;
-    line-height: 18px;
   }
   .url {
     height: 30px;
@@ -91,7 +89,6 @@ export const Form = styled.form`
   .description {
     margin-top: 10px;
     height: 70px;
-  
   }
   button {
     margin-top: 10px;

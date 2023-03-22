@@ -57,8 +57,9 @@ position: relative;
     outline:none;
   }
   .buttons {
-    margin-top: 10px;
+    margin-top: 15px;
     margin-right: 30px;
+    cursor:pointer;
   }
   @media (max-width: 600px) {
     border-radius: 0px;
@@ -88,6 +89,7 @@ export const LinkPost = styled.div`
   }
   .link_details {
     height:120px;
+    margin-top:10px;
     margin-left:10px;
     display: flex;
     flex-direction:column;
@@ -99,6 +101,7 @@ export const LinkPost = styled.div`
     color: #cecece;
     h1 {
       font-size: 16px;
+      font-weight: 700;
     }
     h2 {
       font-size: 13px;
