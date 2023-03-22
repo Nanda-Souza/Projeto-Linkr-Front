@@ -5,9 +5,6 @@ import {
   } from "./hashtagStyle";  
   import Header from "../../components/header/Header";
   import { HashtagBox } from "../../components/hashtag";
-  import logo from "../../assets/linkr.png";
-  import menu_vector from "../../assets/Vector (2).png";
-  import profile from "../../assets/image 3.png";  
   import Post from "../../components/post/Post";
   import { useState, useEffect, useContext } from "react";
   import { useNavigate, useParams } from "react-router";
@@ -81,20 +78,9 @@ import {
   
     return (
       <>
-        <Header>
-          <img src={logo} alt="logo" />
-          <div>
-            <img src={menu_vector} alt="menu" className="menu" />
-            <img
-              src={profile}
-              alt="profile_picture"
-              className="profile_picture"
-            />
-          </div>
-        </Header>
+        <Header />      
         <Timeline>
-          <h1 data-test="hashtag-title">#{hashtag}</h1>
-          
+          <p className="hashtag_name" data-test="hashtag-title">#{hashtag}</p>          
             
           {loadingApi ? (
             <Message>Loading...</Message>
@@ -115,7 +101,7 @@ import {
             </PostsList>
           )}
             <HashtagBox data-test="trending">
-            <h1>trending</h1>
+            <p>trending</p>
             <div className="linha"></div>
             <ul>
             {trends?.map((trend) => (

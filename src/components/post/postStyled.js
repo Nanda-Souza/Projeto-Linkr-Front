@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const PostStyled = styled.li`
-position: relative;
+  position: relative;
   margin-bottom: 20px;
   margin-top: 25px;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
@@ -23,6 +23,7 @@ position: relative;
       margin-top: 10px;
       object-fit: cover;
       cursor: pointer;
+      margin-left: 12px;
     }
     p {
       margin-top: 10px;
@@ -47,19 +48,19 @@ position: relative;
   .edit_comment {
     margin-left: 65px;
     height: 30px;
-    width:65%;
+    width: 65%;
     font-family: "Lato";
     font-style: normal;
     font-weight: 300;
     font-size: 14px;
     border: none;
-    border-radius:5px;
-    outline:none;
+    border-radius: 5px;
+    outline: none;
   }
   .buttons {
     margin-top: 15px;
     margin-right: 30px;
-    cursor:pointer;
+    cursor: pointer;
   }
   @media (max-width: 600px) {
     border-radius: 0px;
@@ -74,7 +75,7 @@ position: relative;
 export const LinkPost = styled.div`
   border: 1px solid #4d4d4d;
   border-radius: 14px;
-  width: 503px;
+  width: 510px;
   height: 155px;
   margin-top: 15px;
   margin-left: 65px;
@@ -88,15 +89,16 @@ export const LinkPost = styled.div`
     object-fit: cover;
   }
   .link_details {
-    height:120px;
-    margin-top:10px;
-    margin-left:10px;
+    height: 120px;
+    width:230px;
+    margin-top: 10px;
+    margin-left: 10px;
     display: flex;
-    flex-direction:column;
+    flex-direction: column;
     justify-content: space-around;
-    align-items:flex-start;
+    align-items: flex-start;
     font-family: "Lato";
-    text-align:justify;
+    text-align: justify;
     font-weight: 400;
     color: #cecece;
     h1 {
