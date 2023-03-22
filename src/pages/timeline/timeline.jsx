@@ -158,10 +158,10 @@ export default function TimelinePage() {
             })}
           </PostsList>
         )}
-        <HashtagBox data-test="trending">
+        <HashtagBox>
           <h1>trending</h1>
           <div className="linha"></div>
-          <ul>
+          <ul data-test="trending">
             {trends?.map((trend) => (
               <li
                 key={trend.trendName}
