@@ -42,7 +42,6 @@ export default function TimelinePage() {
     setLoading(true);
     setButton("Publishing...");
     promise.then((res) => {
-      alert("Post created!");
       setUrl("");
       setDescription("");
       setButton("Publish");

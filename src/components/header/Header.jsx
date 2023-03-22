@@ -42,7 +42,6 @@ export default function Header() {
       config
     );
     promise.then((res) => {
-      console.log(res.data);
       setResult(res.data);
     });
     promise.catch((error) => {
@@ -51,18 +50,11 @@ export default function Header() {
     });
   }
 
-  function keyDown(e) {
-    if (e.key === "Enter") {
-      getUser();
-    }
-    if (e.key === "Escape") {
-      setSearchName("");
-      setIsSearching(false);
-    }
-  }
 
-  function userPage(id) {
-    navigate(`/user/${id}`);
+  function navigateToUserPage(id){
+    navigate(`/user/${id}`)
+    setIsSearching(false) 
+    setSearchName("")   
   }
 
   const handleclick = (event) => {
@@ -100,7 +92,6 @@ export default function Header() {
             placeholder="Search for people"
             value={searchName}
             onChange={(e) => getUser(e)}
-            onKeyDown={keyDown}
             data-test="search"
           />
           {isSearching ? (
@@ -108,7 +99,7 @@ export default function Header() {
               {result?.length ? (
                 result.map((result) => (
                   <li
-                    onClick={() => navigate(`/user/${result.id}`)}
+                    onClick={() => navigateToUserPage(result.id)}
                     key={result.id}
                     data-test="user-search"
                   >
