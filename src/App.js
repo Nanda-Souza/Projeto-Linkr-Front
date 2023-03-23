@@ -5,7 +5,7 @@ import SignUpPage from "./pages/signUp/signUpPage";
 import TimelinePage from "./pages/timeline/timeline";
 import HashtagPage from "./pages/hashtag/hashtag";
 import Modal from "react-modal";
-import UserProfile from "./pages/UserProfile";
+import UserProfile from "./pages/userProfile/UserProfile";
 
 Modal.setAppElement("#root");
 

@@ -43,31 +43,36 @@ export default function Heart(props) {
       .catch((e) => console.log(e));
   }
 
-  const [likedBy, setLikedBy] = useState(users_liked);
+  const [likedBy, setLikedBy] = useState(users_liked.filter(u => u !== user.name));
+
+
+useEffect(() => {
+  let newLikedBy = [...likedBy]; 
+
   if (isLiked && !likedBy.includes("Você")) {
-    setLikedBy(["Você", ...likedBy]);
-  }
-  if (likedBy.includes(user.name) && !isLiked) {
-    setLikedBy(likedBy.filter((name) => name !== user.name));
+    newLikedBy.unshift("Você"); 
+  } else if (!isLiked && likedBy.includes("Você")) {
+    newLikedBy = likedBy.filter((name) => name !== "Você"); 
   }
 
-  const [likesText, setLikesText] = useState("Ninguém curtiu");
-  function setText() {
-    if (likesNumber > 3) {
-      setLikesText(
-        `${likedBy[0]}, ${likedBy[1]} e outras ${likesNumber - 2} pessoas`
-      );
-    } else if (likesNumber === 3) {
-      setLikesText(`${likedBy[0]}, ${likedBy[1]} e ${likedBy[2]}`);
-    } else if (likesNumber === 2) {
+  setLikedBy(newLikedBy); 
+}, [isLiked, likedBy]);
+
+const [likesText, setLikesText] = useState("Ninguém curtiu");
+
+useEffect(() => {
+  if (likedBy.length > 0) {
+    if (likedBy.length === 1) {
+      setLikesText(likedBy[0]);
+    } else if (likedBy.length === 2) {
       setLikesText(`${likedBy[0]} e ${likedBy[1]}`);
-    } else if (likesNumber === 1) {
-      setLikesText(`${likedBy[0]}`);
     } else {
-      setLikesText("Ninguém curtiu");
+      setLikesText(`${likedBy[0]}, ${likedBy[1]} e outras ${likedBy.length - 2} pessoas`);
     }
+  } else {
+    setLikesText("Ninguém curtiu");
   }
-  useEffect(setText, [likesNumber]); // adicionar funçao semelhante com likesNumber de dependencia q adiciona ou remove voce, ve o tamanho do likedBy
+}, [likedBy]);
 
   return (
     <HeartStyled>
