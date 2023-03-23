@@ -11,5 +11,5 @@ font-weight: 700;
 font-size: 14px;
 color:#FFFFFF;
 border:none;
-margin-left:220px;
+margin-right: 0px;
 `

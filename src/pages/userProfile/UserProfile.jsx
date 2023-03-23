@@ -1,29 +1,29 @@
 import {
   Timeline,
-  BoxCreatePost,
-  PostsList,
   Message,
-} from "./timeline/timelineStyle";
+} from "../timeline/timelineStyle";
+import { UserPosts, UserTitle } from "./userProfileStyle";
 import { useState, useEffect, useContext } from "react";
 import axios from "axios";
-import { AuthContext } from "../contexts/authContext";
-import Header from "../components/header/Header";
-import Post from "../components/post/Post";
-import { HashtagBox } from "../components/hashtag";
+import { AuthContext } from "../../contexts/authContext";
+import Header from "../../components/header/Header";
+import Post from "../../components/post/Post";
+import { HashtagBox } from "../../components/hashtag";
 import { useNavigate } from "react-router";
 import { useParams } from "react-router-dom";
-import styled from "styled-components";
-import { Follow } from "../components/follow/followButton";
+import { Follow } from "../../components/follow/followButton";
 
 export default function UserProfile() {
-  const { token } = useContext(AuthContext);
+  const { token, user } = useContext(AuthContext);
   const [loadingApi, setLoadingApi] = useState(true);
   const [posts, setPosts] = useState([]);
   const [trends, setTrends] = useState(undefined);
   const navigate = useNavigate();
   const { id } = useParams();
 
+
   function getPosts() {
+
     const config = {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -84,9 +84,9 @@ export default function UserProfile() {
                 <img src={posts[0].user_img_url} alt={"Foto de perfil"} />
                 <h1>{posts[0].user_name}'s posts</h1>
               </div>
-              <Follow />
+              {parseInt(user.id) !== parseInt(id) ? <Follow /> : null}
             </UserTitle>
-
+           
             <UserPosts data-test="post">
               {posts?.map((post) => {
                 return (
@@ -120,33 +120,3 @@ export default function UserProfile() {
   );
 }
 
-const UserTitle = styled.div`
-  .name_and_photo {
-    display: flex;
-    align-items: center;
-  }
-  img {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    object-fit: cover;
-    cursor: default;
-    margin-right: 20px;
-  }
-  h1 {
-    font-family: "Oswald";
-    font-style: normal;
-    font-weight: 700;
-    font-size: 35px;
-    line-height: 64px;
-    color: #ffffff;
-    cursor: default;
-  }
-  display: flex;
-  align-items: center;
-  margin-block: 5px;
-`;
-const UserPosts = styled.ul`
-  margin-top: 10px;
-  margin-bottom: 25px;
-`;
