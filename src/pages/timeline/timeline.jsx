@@ -178,7 +178,7 @@ export default function TimelinePage() {
         </BoxCreatePost>
         {loadingApi ? (
           <Message>Loading...</Message>
-        ) : posts.length === 0 ? (
+        ) : posts.length === 0 && !awaitingPosts ? (
           <Message data-test="message">There are no posts yet</Message>
         ) : (
           <PostsList>
