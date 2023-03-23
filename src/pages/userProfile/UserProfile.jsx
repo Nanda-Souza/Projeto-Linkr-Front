@@ -67,7 +67,11 @@ export default function UserProfile() {
     getPosts();
     getTrends();
   }, [id]);
-
+  if(posts === null){
+    return (<><Header/>
+    <Message>User not found</Message>
+    </>)
+  }
   return (
     <>
       <Header />
@@ -75,20 +79,27 @@ export default function UserProfile() {
       <Timeline>
         {loadingApi ? (
           <Message>Loading...</Message>
-        ) : posts.length === 0 ? (
-          <Message>There are no posts yet</Message>
+        ) : posts.posts.length === 0 ? (<>
+          <UserTitle>
+              <div className="name_and_photo">
+                <img src={posts.user.img_url} alt={"Foto de perfil"} />
+                <h1>{posts.user.name}'s posts</h1>
+              </div>
+              {parseInt(user.id) !== parseInt(id) ? <Follow /> : null}
+            </UserTitle>
+          <Message>There are no posts yet</Message></>
         ) : (
           <>
             <UserTitle>
               <div className="name_and_photo">
-                <img src={posts[0].user_img_url} alt={"Foto de perfil"} />
-                <h1>{posts[0].user_name}'s posts</h1>
+                <img src={posts.user.img_url} alt={"Foto de perfil"} />
+                <h1>{posts.user.name}'s posts</h1>
               </div>
               {parseInt(user.id) !== parseInt(id) ? <Follow /> : null}
             </UserTitle>
            
             <UserPosts data-test="post">
-              {posts?.map((post) => {
+              {posts.posts?.map((post) => {
                 return (
                   <Post
                     key={post.post_id}
