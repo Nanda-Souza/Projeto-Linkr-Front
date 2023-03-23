@@ -17,6 +17,7 @@ import { useNavigate } from "react-router";
 import apiPost from "../../services/apiPost";
 import useInterval from "use-interval";
 import { BiRefresh } from "react-icons/bi";
+import InfiniteScroll from "react-infinite-scroller";
 
 export default function TimelinePage() {
   const { user } = useContext(AuthContext);
@@ -30,6 +31,9 @@ export default function TimelinePage() {
   const [standByPosts, setStandByPosts] = useState([]);
   const [awaitingPosts, setAwaitingPosts] = useState(0);
   const [trends, setTrends] = useState(undefined);
+  const [loadingOlderPosts, setLoadingOlderPosts] = useState(
+    "No more posts to show"
+  );
   const navigate = useNavigate();
 
   function createPost(e) {
@@ -64,23 +68,6 @@ export default function TimelinePage() {
     });
   }
 
-  // function getPosts() {
-  //   apiPost
-  //     .getPostsReq(token)
-  //     .then((res) => {
-  //       setLoadingApi(false);
-  //       setPosts(res.data);
-  //       setStandByPosts([]);
-  //       setAwaitingPosts(0);
-  //     })
-  //     .catch((error) => {
-  //       console.log(error);
-  //       alert(
-  //         "An error occured while trying to fetch the posts, please refresh the page"
-  //       );
-  //     });
-  // }
-
   const getPosts = useCallback(() => {
     apiPost
       .getPostsReq(token)
@@ -97,22 +84,6 @@ export default function TimelinePage() {
         );
       });
   }, [token, setLoadingApi, setPosts, setStandByPosts, setAwaitingPosts]);
-
-  // function getTrends() {
-  //   const config = {
-  //     headers: {
-  //       Authorization: `Bearer ${token}`,
-  //     },
-  //   };
-  //   const URL = `${process.env.REACT_APP_API_URL}/top-trending`;
-  //   const promise = axios.get(URL, config);
-  //   promise.then((res) => {
-  //     setTrends(res.data);
-  //   });
-  //   promise.catch((error) => {
-  //     console.log(error.message);
-  //   });
-  // }
 
   const getTrends = useCallback(() => {
     const config = {
@@ -162,6 +133,27 @@ export default function TimelinePage() {
     setAwaitingPosts(0);
   }
   useInterval(fetchMorePosts, 15000);
+
+  function loadOlderPosts() {
+    const lastPostId = posts[posts.length - 1].post_id;
+    apiPost
+      .getPostsReq(token, lastPostId)
+      .then((res) => {
+        const newPosts = res.data.filter((post) => post.post_id < lastPostId);
+        if (newPosts.length === 0) {
+          setLoadingOlderPosts("No more posts to show");
+        } else {
+          const newPostsList = [...posts, ...newPosts];
+          setPosts(newPostsList);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+        alert(
+          "An error occured while trying to fetch older posts, please refresh the page"
+        );
+      });
+  }
 
   useEffect(() => {
     getPosts();
@@ -219,11 +211,27 @@ export default function TimelinePage() {
                 {awaitingPosts} new posts, load more! <BiRefresh></BiRefresh>
               </MorePostsButton>
             )}
-            {posts?.map((post) => {
-              return (
-                <Post key={post.post_id} post={post} getPosts={getPosts}></Post>
-              );
-            })}
+
+            <InfiniteScroll
+              pageStart={0}
+              loadMore={loadOlderPosts}
+              hasMore={true || false}
+              loader={
+                <div className="loader" key={0}>
+                  {loadingOlderPosts}
+                </div>
+              }
+            >
+              {posts?.map((post) => {
+                return (
+                  <Post
+                    key={post.post_id}
+                    post={post}
+                    getPosts={getPosts}
+                  ></Post>
+                );
+              })}
+            </InfiniteScroll>
           </PostsList>
         )}
         <HashtagBox>
