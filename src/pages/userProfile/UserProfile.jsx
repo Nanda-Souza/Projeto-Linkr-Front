@@ -62,6 +62,8 @@ export default function UserProfile() {
   function navigateTrends(hashtag) {
     navigate(`/hashtag/${hashtag}`);
   }
+  
+   
 
   useEffect(() => {
     getPosts();
@@ -85,7 +87,7 @@ export default function UserProfile() {
                 <img src={posts.user.img_url} alt={"Foto de perfil"} />
                 <h1>{posts.user.name}'s posts</h1>
               </div>
-              {parseInt(user.id) !== parseInt(id) ? <Follow /> : null}
+              {parseInt(user.id) !== parseInt(id) ? <Follow id={id} token={token}/> : null}
             </UserTitle>
           <Message>There are no posts yet</Message></>
         ) : (
@@ -95,7 +97,7 @@ export default function UserProfile() {
                 <img src={posts.user.img_url} alt={"Foto de perfil"} />
                 <h1>{posts.user.name}'s posts</h1>
               </div>
-              {parseInt(user.id) !== parseInt(id) ? <Follow /> : null}
+              {parseInt(user.id) !== parseInt(id) ? <Follow id={id} token={token}/> : null}
             </UserTitle>
            
             <UserPosts data-test="post">
