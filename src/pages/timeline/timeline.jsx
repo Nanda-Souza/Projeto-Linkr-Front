@@ -129,7 +129,7 @@ export default function TimelinePage() {
     setAwaitingPosts(0);
   }
 
-  useInterval(fetchMorePosts, 3000);
+  useInterval(fetchMorePosts, 15000);
 
   useEffect(() => {
     getPosts();
