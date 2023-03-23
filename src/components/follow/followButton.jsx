@@ -4,9 +4,12 @@ import { useEffect, useState } from "react";
 
 export function Follow({id, token}){
     const [isFollowing, setIsFollowing] = useState(false)
-    const [following, setFollowing] = useState("Follow")
+    const [follow, setFollow] = useState(undefined)
+    const [disable, setDisable] = useState(false)
+    const [isLoading, setIsLoading] = useState(true);
 
-    function follow(){
+    function followUser(){    
+
         const config = {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -14,33 +17,36 @@ export function Follow({id, token}){
           };
           const URL = `${process.env.REACT_APP_API_URL}/user/${id}`;
           const promise = axios.post(URL, {}, config);
+
+          setDisable(true)
           promise.then((res) => {
-            alert("Following!")
-            setFollowing("Unfollow")
-            console.log(res.data)
+            setFollow("Unfollow")
+            setDisable(false)
+            setIsFollowing(true)
           });
           promise.catch((error) => {
-            alert("Error!")
+            alert("Something went wrong. Please, try again.")
             console.log(error);
           });    
     }
 
 
-    function unfollow(){
+    function unfollowUser(){
         const config = {
             headers: {
               Authorization: `Bearer ${token}`,
             },
           };
           const URL = `${process.env.REACT_APP_API_URL}/user/${id}`;
-          const promise = axios.delete(URL, {}, config);
+          const promise = axios.delete(URL, config);
+          setDisable(true)
           promise.then((res) => {
-            alert("Following!")
-            setFollowing("Unfollow")
-            console.log(res.data)
+            setFollow("Follow")
+            setDisable(false)
+            setIsFollowing(false)
           });
           promise.catch((error) => {
-            alert("Error!")
+            alert("Something went wrong. Please, try again.")
             console.log(error);
           });    
     }
@@ -53,11 +59,18 @@ export function Follow({id, token}){
           };
           const URL = `${process.env.REACT_APP_API_URL}/follow/${id}`;
           const promise = axios.get(URL, config);
-          promise.then((res) => {
-            console.log(res.data)
+          setIsLoading(false);
+          promise.then((res) => {        
+            if(res.data.length === 0){
+                setFollow("Follow")
+                setIsFollowing(false)
+            } else {
+                setFollow("Unfollow")
+                setIsFollowing(true)
+            }
           });
           promise.catch((error) => {
-            alert("Error!")
+            alert("Something went wrong. Please, try again.")
             console.log(error);
           });    
 
@@ -67,9 +80,13 @@ export function Follow({id, token}){
         getFollow()
     }, [id])
 
+    if (isLoading || follow === undefined) {
+        return <div>Loading...</div>;
+      }
+
     return (
         <>
-        <ButtonFollow onClick={follow}>{following}</ButtonFollow>
+        <ButtonFollow disable={disable} onClick={isFollowing ? unfollowUser : followUser} follow={follow}>{follow}</ButtonFollow>
         </>
     )
 }
