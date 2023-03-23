@@ -121,3 +121,20 @@ export const PostsList = styled.ul`
   margin-top: 50px;
   margin-bottom: 25px;
 `;
+
+export const MorePostsButton = styled.button`
+  margin-top: 10px;
+  width: 611px;
+  height: 61px;
+  background: #1877f2;
+  border-radius: 5px;
+  border: none;
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  color: #ffffff;
+  @media (max-width: 600px) {
+    width: 100vw;
+;
+`;

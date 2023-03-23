@@ -4,6 +4,7 @@ import {
   Form,
   PostsList,
   Message,
+  MorePostsButton,
 } from "./timelineStyle";
 import timeline from "../../assets/timeline.png";
 import { useState, useEffect, useContext } from "react";
@@ -15,6 +16,7 @@ import { HashtagBox } from "../../components/hashtag";
 import { useNavigate } from "react-router";
 import apiPost from "../../services/apiPost";
 import useInterval from "use-interval";
+import { BiRefresh } from "react-icons/bi";
 
 export default function TimelinePage() {
   const { user } = useContext(AuthContext);
@@ -26,6 +28,7 @@ export default function TimelinePage() {
   const [description, setDescription] = useState("");
   const [posts, setPosts] = useState([]);
   const [standByPosts, setStandByPosts] = useState([]);
+  const [awaitingPosts, setAwaitingPosts] = useState(0);
   const [trends, setTrends] = useState(undefined);
   const navigate = useNavigate();
 
@@ -67,6 +70,8 @@ export default function TimelinePage() {
       .then((res) => {
         setLoadingApi(false);
         setPosts(res.data);
+        setStandByPosts([]);
+        setAwaitingPosts(0);
       })
       .catch((error) => {
         console.log(error);
@@ -102,15 +107,12 @@ export default function TimelinePage() {
       .getPostsReq(token)
       .then((res) => {
         const newPosts = res.data.filter((post) => post.post_id > lastPostId);
-        const newStandByPosts = [...newPosts, ...posts];
-        setStandByPosts(newStandByPosts);
         if (newPosts.length === 0) {
           console.log("No more posts to show");
         } else {
-          const LoadMore = window.confirm("Load more posts?");
-          if (LoadMore) {
-            setPosts(newStandByPosts);
-          }
+          const newStandByPosts = [...newPosts, ...posts];
+          setStandByPosts(newStandByPosts);
+          setAwaitingPosts(newPosts.length);
         }
       })
       .catch((error) => {
@@ -121,7 +123,13 @@ export default function TimelinePage() {
       });
   }
 
-  useInterval(fetchMorePosts, 5000);
+  function showMorePosts() {
+    setPosts(standByPosts);
+    setStandByPosts([]);
+    setAwaitingPosts(0);
+  }
+
+  useInterval(fetchMorePosts, 3000);
 
   useEffect(() => {
     getPosts();
@@ -174,6 +182,11 @@ export default function TimelinePage() {
           <Message data-test="message">There are no posts yet</Message>
         ) : (
           <PostsList>
+            {awaitingPosts > 0 && (
+              <MorePostsButton onClick={showMorePosts}>
+                {awaitingPosts} new posts, load more! <BiRefresh></BiRefresh>
+              </MorePostsButton>
+            )}
             {posts?.map((post) => {
               return (
                 <Post key={post.post_id} post={post} getPosts={getPosts}></Post>
