@@ -4,6 +4,7 @@ import {
   Form,
   PostsList,
   Message,
+  MorePostsButton,
 } from "./timelineStyle";
 import timeline from "../../assets/timeline.png";
 import { useState, useEffect, useContext } from "react";
@@ -13,6 +14,9 @@ import Header from "../../components/header/Header";
 import Post from "../../components/post/Post";
 import { HashtagBox } from "../../components/hashtag";
 import { useNavigate } from "react-router";
+import apiPost from "../../services/apiPost";
+import useInterval from "use-interval";
+import { BiRefresh } from "react-icons/bi";
 
 export default function TimelinePage() {
   const { user } = useContext(AuthContext);
@@ -23,6 +27,8 @@ export default function TimelinePage() {
   const [url, setUrl] = useState("");
   const [description, setDescription] = useState("");
   const [posts, setPosts] = useState([]);
+  const [standByPosts, setStandByPosts] = useState([]);
+  const [awaitingPosts, setAwaitingPosts] = useState(0);
   const [trends, setTrends] = useState(undefined);
   const navigate = useNavigate();
 
@@ -59,23 +65,20 @@ export default function TimelinePage() {
   }
 
   function getPosts() {
-    const config = {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    };
-    const URL = `${process.env.REACT_APP_API_URL}/timeline`;
-    const promise = axios.get(URL, config);
-    promise.then((res) => {
-      setLoadingApi(false);
-      setPosts(res.data);
-    });
-    promise.catch((error) => {
-      console.log(error);
-      alert(
-        "An error occured while trying to fetch the posts, please refresh the page"
-      );
-    });
+    apiPost
+      .getPostsReq(token)
+      .then((res) => {
+        setLoadingApi(false);
+        setPosts(res.data);
+        setStandByPosts([]);
+        setAwaitingPosts(0);
+      })
+      .catch((error) => {
+        console.log(error);
+        alert(
+          "An error occured while trying to fetch the posts, please refresh the page"
+        );
+      });
   }
 
   function getTrends() {
@@ -98,6 +101,36 @@ export default function TimelinePage() {
     navigate(`/hashtag/${hashtag}`);
   }
 
+  function fetchMorePosts() {
+    const lastPostId = posts[0] ? posts[0].post_id : 0;
+    apiPost
+      .getPostsReq(token)
+      .then((res) => {
+        const newPosts = res.data.filter((post) => post.post_id > lastPostId);
+        if (newPosts.length === 0) {
+          console.log("No more posts to show");
+        } else {
+          const newStandByPosts = [...newPosts, ...posts];
+          setStandByPosts(newStandByPosts);
+          setAwaitingPosts(newPosts.length);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+        alert(
+          "An error occured while trying to fetch new posts, please refresh the page"
+        );
+      });
+  }
+
+  function showMorePosts() {
+    setPosts(standByPosts);
+    setStandByPosts([]);
+    setAwaitingPosts(0);
+  }
+
+  useInterval(fetchMorePosts, 3000);
+
   useEffect(() => {
     getPosts();
     getTrends();
@@ -112,7 +145,6 @@ export default function TimelinePage() {
         <BoxCreatePost data-test="publish-box">
           <div>
             <img
-              // src is user.img_url if user is logged in, else src is default profile picture
               src={user?.img_url || "https://i.imgur.com/6VBx3io.png"}
               alt="profile_picture"
               className="profile_picture"
@@ -150,6 +182,11 @@ export default function TimelinePage() {
           <Message data-test="message">There are no posts yet</Message>
         ) : (
           <PostsList>
+            {awaitingPosts > 0 && (
+              <MorePostsButton onClick={showMorePosts}>
+                {awaitingPosts} new posts, load more! <BiRefresh></BiRefresh>
+              </MorePostsButton>
+            )}
             {posts?.map((post) => {
               return (
                 <Post key={post.post_id} post={post} getPosts={getPosts}></Post>
