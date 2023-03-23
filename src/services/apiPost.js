@@ -10,7 +10,13 @@ function authToken(token) {
   };
 }
 
-function getPostsReq(token) {
+function getPostsReq(token, lastPostId) {
+  console.log("lastPostId: " + lastPostId);
+  if (lastPostId)
+    return axios.get(
+      `${BASE_URL}/timeline?offset=${lastPostId}`,
+      authToken(token)
+    );
   return axios.get(`${BASE_URL}/timeline`, authToken(token));
 }
 
