@@ -66,7 +66,7 @@ export default function Post({ post, getPosts }) {
     promise.catch((error) => {
       setIsDisable(false);
       setNewComment(newComment);
-      alert("Something wet wrong. Please, try again.");
+      alert("Something went wrong. Please, try again.");
     });
   }
 
