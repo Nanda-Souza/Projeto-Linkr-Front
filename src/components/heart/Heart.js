@@ -43,18 +43,19 @@ export default function Heart(props) {
       .catch((e) => console.log(e));
   }
 
-  const [likedBy, setLikedBy] = useState(users_liked);
+  const [likedBy, setLikedBy] = useState(users_liked.filter(u => u !== user.name));
+
 
 useEffect(() => {
-  let newLikedBy = [...likedBy]; // cria uma cópia do array likedBy
+  let newLikedBy = [...likedBy]; 
 
   if (isLiked && !likedBy.includes("Você")) {
-    newLikedBy.unshift("Você"); // adiciona "Você" no início do array
+    newLikedBy.unshift("Você"); 
   } else if (!isLiked && likedBy.includes("Você")) {
-    newLikedBy = likedBy.filter((name) => name !== "Você"); // remove "Você" do array
+    newLikedBy = likedBy.filter((name) => name !== "Você"); 
   }
 
-  setLikedBy(newLikedBy); // atualiza o estado com o novo array
+  setLikedBy(newLikedBy); 
 }, [isLiked, likedBy]);
 
 const [likesText, setLikesText] = useState("Ninguém curtiu");
@@ -72,7 +73,6 @@ useEffect(() => {
     setLikesText("Ninguém curtiu");
   }
 }, [likedBy]);
- // adicionar funçao semelhante com likesNumber de dependencia q adiciona ou remove voce, ve o tamanho do likedBy
 
   return (
     <HeartStyled>

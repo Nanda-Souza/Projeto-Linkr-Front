@@ -67,7 +67,11 @@ export default function UserProfile() {
     getPosts();
     getTrends();
   }, [id]);
-
+  if(posts === null){
+    return (<><Header/>
+    <Message>User not found</Message>
+    </>)
+  }
   return (
     <>
       <Header />
@@ -81,7 +85,7 @@ export default function UserProfile() {
                 <img src={posts.user.img_url} alt={"Foto de perfil"} />
                 <h1>{posts.user.name}'s posts</h1>
               </div>
-              <Follow />
+              {parseInt(user.id) !== parseInt(id) ? <Follow /> : null}
             </UserTitle>
           <Message>There are no posts yet</Message></>
         ) : (
