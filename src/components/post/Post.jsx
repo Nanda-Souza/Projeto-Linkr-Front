@@ -20,22 +20,21 @@ export default function Post({ post, getPosts }) {
     user_id,
     user_name,
     user_img_url,
-    likeInfo
+    likeInfo,
   } = post;
   const [comment, setComment] = useState(post_comment);
   const [editPost, setEditPost] = useState(false);
   const [newComment, setNewComment] = useState("");
   const [isDisable, setIsDisable] = useState(false);
- 
+
   const { token } = useContext(AuthContext);
   const { user } = useContext(AuthContext);
   const inputRef = useRef(null);
   const navigate = useNavigate();
-  const tagStyle = {    
-    fontWeight: 'bold',
-    cursor: 'pointer'
+  const tagStyle = {
+    fontWeight: "bold",
+    cursor: "pointer",
   };
-
 
   function editComment(post_id) {
     setNewComment("");
@@ -89,11 +88,10 @@ export default function Post({ post, getPosts }) {
     }
   }
 
-  function navigateTrends(tag){
-    const hashtag = tag.replace('#','')
-    
-    navigate(`/hashtag/${hashtag}`) 
-    
+  function navigateTrends(tag) {
+    const hashtag = tag.replace("#", "");
+
+    navigate(`/hashtag/${hashtag}`);
   }
 
   useEffect(() => {
@@ -103,21 +101,23 @@ export default function Post({ post, getPosts }) {
   }, [editPost]);
 
   return (
-    <PostStyled key={post_id}  data-test="post">
+    <PostStyled key={post_id} data-test="post">
       <div className="header_post">
         <div className="info">
           <img
             src={user_img_url}
             alt="profile_picture"
             className="profile_picture_post"
-            onClick={() => navigate(`/user/${user_id}`) }
+            onClick={() => navigate(`/user/${user_id}`)}
           />
-          <p  data-test="username" onClick={() => navigate(`/user/${user_id}`) }>{user_name}</p>
+          <p data-test="username" onClick={() => navigate(`/user/${user_id}`)}>
+            {user_name}
+          </p>
         </div>
         {user.id === user_id && (
           <div className="buttons">
             <BsPencil
-            data-test="edit-btn"
+              data-test="edit-btn"
               color="white"
               size={17}
               onClick={() => sendEditPost(post_id)}
@@ -126,10 +126,10 @@ export default function Post({ post, getPosts }) {
           </div>
         )}
       </div>
-      <Heart likeInfo={likeInfo}/>
+      <Heart likeInfo={likeInfo} />
       {editPost ? (
         <input
-        data-test="edit-input"
+          data-test="edit-input"
           className="edit_comment"
           type="text"
           ref={inputRef}
@@ -143,7 +143,9 @@ export default function Post({ post, getPosts }) {
           tagStyle={tagStyle}
           tagClicked={(tag) => navigateTrends(tag)}
         >
-          <p  data-test="description" className="description_post">{comment}</p>
+          <p data-test="description" className="description_post">
+            {comment}
+          </p>
         </ReactTagify>
       )}
       <a href={post_link} target="_blank" data-test="link">
@@ -156,7 +158,6 @@ export default function Post({ post, getPosts }) {
           <img src={post_image} alt="" className="link_img" />
         </LinkPost>
       </a>
-      
     </PostStyled>
   );
 }

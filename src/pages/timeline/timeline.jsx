@@ -7,7 +7,7 @@ import {
   MorePostsButton,
 } from "./timelineStyle";
 import timeline from "../../assets/timeline.png";
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect, useContext, useCallback } from "react";
 import axios from "axios";
 import { AuthContext } from "../../contexts/authContext";
 import Header from "../../components/header/Header";
@@ -64,7 +64,24 @@ export default function TimelinePage() {
     });
   }
 
-  function getPosts() {
+  // function getPosts() {
+  //   apiPost
+  //     .getPostsReq(token)
+  //     .then((res) => {
+  //       setLoadingApi(false);
+  //       setPosts(res.data);
+  //       setStandByPosts([]);
+  //       setAwaitingPosts(0);
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //       alert(
+  //         "An error occured while trying to fetch the posts, please refresh the page"
+  //       );
+  //     });
+  // }
+
+  const getPosts = useCallback(() => {
     apiPost
       .getPostsReq(token)
       .then((res) => {
@@ -79,9 +96,25 @@ export default function TimelinePage() {
           "An error occured while trying to fetch the posts, please refresh the page"
         );
       });
-  }
+  }, [token, setLoadingApi, setPosts, setStandByPosts, setAwaitingPosts]);
 
-  function getTrends() {
+  // function getTrends() {
+  //   const config = {
+  //     headers: {
+  //       Authorization: `Bearer ${token}`,
+  //     },
+  //   };
+  //   const URL = `${process.env.REACT_APP_API_URL}/top-trending`;
+  //   const promise = axios.get(URL, config);
+  //   promise.then((res) => {
+  //     setTrends(res.data);
+  //   });
+  //   promise.catch((error) => {
+  //     console.log(error.message);
+  //   });
+  // }
+
+  const getTrends = useCallback(() => {
     const config = {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -95,7 +128,7 @@ export default function TimelinePage() {
     promise.catch((error) => {
       console.log(error.message);
     });
-  }
+  }, [token, setTrends]);
 
   function navigateTrends(hashtag) {
     navigate(`/hashtag/${hashtag}`);
@@ -128,13 +161,12 @@ export default function TimelinePage() {
     setStandByPosts([]);
     setAwaitingPosts(0);
   }
-
   useInterval(fetchMorePosts, 15000);
 
   useEffect(() => {
     getPosts();
     getTrends();
-  }, []);
+  }, [getTrends, getPosts]);
 
   return (
     <>
