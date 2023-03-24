@@ -47,10 +47,6 @@ export const HeaderDiv = styled.div`
       }
     }
     ul {
-      font-family: "Lato";
-      font-size: 18px;
-      font-weight: 400;
-      color: #515151;
       background-color: #e7e7e7;
       width: 100%;
       margin-top: 2px;
@@ -63,6 +59,10 @@ export const HeaderDiv = styled.div`
         margin-bottom: 10px;
         cursor: pointer;
         p {
+          font-family: "Lato";
+          font-size: 18px;
+          font-weight: 400;
+          color: #515151;
           margin-top: 15px;
           margin-left: 5px;
         }
@@ -71,6 +71,13 @@ export const HeaderDiv = styled.div`
           height: 39px;
           left: 454px;
           border-radius: 50%;
+        }
+        .following {
+          font-family: "Lato";
+          font-style: normal;
+          font-weight: 400;
+          font-size: 18px;
+          color: #c5c5c5;
         }
       }
     }
