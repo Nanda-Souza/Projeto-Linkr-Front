@@ -31,6 +31,7 @@ export default function TimelinePage() {
   const [standByPosts, setStandByPosts] = useState([]);
   const [awaitingPosts, setAwaitingPosts] = useState(0);
   const [trends, setTrends] = useState(undefined);
+  const [follows, setFollows] = useState(undefined);
   const [loadingOlderPosts, setLoadingOlderPosts] = useState(
     "No more posts to show"
   );
@@ -101,6 +102,23 @@ export default function TimelinePage() {
     });
   }, [token, setTrends]);
 
+  const checkFollowers = useCallback(() => {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    const URL = `${process.env.REACT_APP_API_URL}/is-following`;
+    const promise = axios.get(URL, config);
+    promise.then((res) => {
+      setFollows(res.data)
+      console.log(res.data);
+    });
+    promise.catch((error) => {
+      console.log(error.message);
+    });
+  }, [token, setFollows]);
+
   function navigateTrends(hashtag) {
     navigate(`/hashtag/${hashtag}`);
   }
@@ -158,7 +176,8 @@ export default function TimelinePage() {
   useEffect(() => {
     getPosts();
     getTrends();
-  }, [getTrends, getPosts]);
+    checkFollowers();
+  }, [getTrends, getPosts, checkFollowers]);
 
   return (
     <>
@@ -202,9 +221,11 @@ export default function TimelinePage() {
         </BoxCreatePost>
         {loadingApi ? (
           <Message>Loading...</Message>
+        ) : !follows ? (
+          <Message data-test="message">You don't follow anyone yet. Search for new friends!</Message>
         ) : posts.length === 0 && !awaitingPosts ? (
-          <Message data-test="message">There are no posts yet</Message>
-        ) : (
+          <Message data-test="message">No posts found from your friends</Message>
+        ): (
           <PostsList>
             {awaitingPosts > 0 && (
               <MorePostsButton onClick={showMorePosts}>
