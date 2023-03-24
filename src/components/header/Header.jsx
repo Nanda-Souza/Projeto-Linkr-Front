@@ -50,10 +50,9 @@ export default function Header() {
     });
   }
 
-
-  function navigateToUserPage(id){
-    navigate(`/user/${id}`)
-    setIsSearching(false)  
+  function navigateToUserPage(id) {
+    navigate(`/user/${id}`);
+    setIsSearching(false);
   }
 
   const handleclick = (event) => {
@@ -104,6 +103,7 @@ export default function Header() {
                   >
                     <img src={result.img_url} />
                     <p>{result.name}</p>
+                    {result.followed && <p className="following">• following</p>}
                   </li>
                 ))
               ) : (
