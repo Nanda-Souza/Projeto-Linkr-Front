@@ -203,7 +203,7 @@ export default function TimelinePage() {
         {loadingApi ? (
           <Message>Loading...</Message>
         ) : posts.length === 0 && !awaitingPosts ? (
-          <Message data-test="message">There are no posts yet</Message>
+          <Message data-test="message">No posts found from your friends</Message>
         ) : (
           <PostsList>
             {awaitingPosts > 0 && (
