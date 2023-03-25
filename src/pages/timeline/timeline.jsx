@@ -32,9 +32,7 @@ export default function TimelinePage() {
   const [awaitingPosts, setAwaitingPosts] = useState(0);
   const [trends, setTrends] = useState(undefined);
   const [follows, setFollows] = useState(undefined);
-  const [loadingOlderPosts, setLoadingOlderPosts] = useState(
-    "No more posts to show"
-  );
+  const [hasMore, setHasMore] = useState(true);
   const navigate = useNavigate();
 
   function createPost(e) {
@@ -111,7 +109,7 @@ export default function TimelinePage() {
     const URL = `${process.env.REACT_APP_API_URL}/is-following`;
     const promise = axios.get(URL, config);
     promise.then((res) => {
-      setFollows(res.data)
+      setFollows(res.data);
       console.log(res.data);
     });
     promise.catch((error) => {
@@ -160,7 +158,7 @@ export default function TimelinePage() {
       .then((res) => {
         const newPosts = res.data.filter((post) => post.post_id < lastPostId);
         if (newPosts.length === 0) {
-          setLoadingOlderPosts("No more posts to show");
+          setHasMore(false);
         } else {
           const newPostsList = [...posts, ...newPosts];
           setPosts(newPostsList);
@@ -223,13 +221,17 @@ export default function TimelinePage() {
         {loadingApi ? (
           <Message>Loading...</Message>
         ) : !follows ? (
-          <Message data-test="message">You don't follow anyone yet. Search for new friends!</Message>
+          <Message data-test="message">
+            You don't follow anyone yet. Search for new friends!
+          </Message>
         ) : posts.length === 0 && !awaitingPosts ? (
-          <Message data-test="message">No posts found from your friends</Message>
-        ): (
+          <Message data-test="message">
+            No posts found from your friends
+          </Message>
+        ) : (
           <PostsList>
             {awaitingPosts > 0 && (
-              <MorePostsButton onClick={showMorePosts}>
+              <MorePostsButton data-test="load-btn" onClick={showMorePosts}>
                 {awaitingPosts} new posts, load more! <BiRefresh></BiRefresh>
               </MorePostsButton>
             )}
@@ -237,11 +239,11 @@ export default function TimelinePage() {
             <InfiniteScroll
               pageStart={0}
               loadMore={loadOlderPosts}
-              hasMore={true || false}
+              hasMore={hasMore}
               loader={
-                <div className="loader" key={0}>
-                  {loadingOlderPosts}
-                </div>
+                <Message className="loader" key={0}>
+                  Loading ...
+                </Message>
               }
             >
               {posts?.map((post) => {
