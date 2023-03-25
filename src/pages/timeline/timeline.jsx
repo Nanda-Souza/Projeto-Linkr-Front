@@ -220,7 +220,7 @@ export default function TimelinePage() {
         </BoxCreatePost>
         {loadingApi ? (
           <Message>Loading...</Message>
-        ) : !follows ? (
+        ) : !follows && posts.length === 0 ? (
           <Message data-test="message">
             You don't follow anyone yet. Search for new friends!
           </Message>

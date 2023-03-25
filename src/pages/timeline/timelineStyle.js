@@ -22,7 +22,7 @@ export const Message = styled.div`
   font-family: "Lato";
   font-style: normal;
   font-weight: 300;
-  font-size: 30px;
+  font-size: 28px;
   color: #ffffff;
 `;
 
