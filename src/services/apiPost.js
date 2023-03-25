@@ -14,10 +14,10 @@ function getPostsReq(token, lastPostId) {
   console.log("lastPostId: " + lastPostId);
   if (lastPostId)
     return axios.get(
-      `${BASE_URL}/timeline?offset=${lastPostId}`,
+      `${BASE_URL}/timeline?oldestPost=${lastPostId}?limit=10`,
       authToken(token)
     );
-  return axios.get(`${BASE_URL}/timeline`, authToken(token));
+  return axios.get(`${BASE_URL}/timeline?limit=10`, authToken(token));
 }
 
 function likePostReq(isLiked, postId, token) {
@@ -32,6 +32,13 @@ function likePostReq(isLiked, postId, token) {
   }
 }
 
+function getNewPostsReq(token, lastPostId) {
+  return axios.get(
+    `${BASE_URL}/timeline?newestPost=${lastPostId}`,
+    authToken(token)
+  );
+}
+
 function deleteAPost(postId, token) {
   return axios.delete(`${BASE_URL}/posts/${Number(postId)}`, authToken(token));
 }
@@ -39,6 +46,7 @@ export const apiPost = {
   likePostReq,
   deleteAPost,
   getPostsReq,
+  getNewPostsReq,
 };
 
 export default apiPost;

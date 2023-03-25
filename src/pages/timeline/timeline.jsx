@@ -108,7 +108,7 @@ export default function TimelinePage() {
   function fetchMorePosts() {
     const lastPostId = posts[0] ? posts[0].post_id : 0;
     apiPost
-      .getPostsReq(token)
+      .getNewPostsReq(token, lastPostId)
       .then((res) => {
         const newPosts = res.data.filter((post) => post.post_id > lastPostId);
         if (newPosts.length === 0) {
@@ -132,6 +132,7 @@ export default function TimelinePage() {
     setStandByPosts([]);
     setAwaitingPosts(0);
   }
+
   useInterval(fetchMorePosts, 15000);
 
   function loadOlderPosts() {
