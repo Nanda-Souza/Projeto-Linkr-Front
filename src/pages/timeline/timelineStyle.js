@@ -120,6 +120,13 @@ export const Form = styled.form`
 export const PostsList = styled.ul`
   margin-top: 50px;
   margin-bottom: 25px;
+  .loader{
+    font-family: "Lato";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    color: #ffffff;
+  }
 `;
 
 export const MorePostsButton = styled.button`
@@ -136,5 +143,5 @@ export const MorePostsButton = styled.button`
   color: #ffffff;
   @media (max-width: 600px) {
     width: 100vw;
-;
+  }
 `;
