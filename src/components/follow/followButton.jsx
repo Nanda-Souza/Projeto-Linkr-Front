@@ -86,7 +86,7 @@ export function Follow({id, token}){
 
     return (
         <>
-        <ButtonFollow disable={disable} onClick={isFollowing ? unfollowUser : followUser} follow={follow}>{follow}</ButtonFollow>
+        <ButtonFollow data-test="follow-btn" disable={disable} onClick={isFollowing ? unfollowUser : followUser} follow={follow}>{follow}</ButtonFollow>
         </>
     )
 }
