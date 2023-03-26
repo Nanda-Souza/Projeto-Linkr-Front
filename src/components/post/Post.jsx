@@ -132,7 +132,7 @@ export default function Post({ post, getPosts }) {
       </div>
       <Heart likeInfo={likeInfo} />
       <Comment commentCount={commentCount} post_id={post_id}/>
-      <Repost shareCount={shareCount} post_id={post_id}/>
+      <Repost shareCount={shareCount} post={post}/>
       {editPost ? (
         <input
           data-test="edit-input"

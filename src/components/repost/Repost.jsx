@@ -11,7 +11,7 @@ import {
 
 
 export default function Repost(props) {
-    const { token } = useContext(AuthContext);
+    const { token } = useContext(AuthContext);    
     const { post_id, shareCount } = props;
     const [shareNumber, setShareNumber] = useState(Number(shareCount));
     const [isOpen, setIsOpen] = useState(false);
