@@ -2,6 +2,7 @@ import { LinkPost, PostStyled } from "./postStyled";
 import { BsPencil } from "react-icons/bs";
 import DeletePost from "../deletepost/DeletePost";
 import Heart from "../heart/Heart";
+import Comment from "../comment/Comment";
 import { useState, useContext, useRef, useEffect } from "react";
 import axios from "axios";
 import { AuthContext } from "../../contexts/authContext";
@@ -21,6 +22,7 @@ export default function Post({ post, getPosts }) {
     user_name,
     user_img_url,
     likeInfo,
+    commentCount
   } = post;
   const [comment, setComment] = useState(post_comment);
   const [editPost, setEditPost] = useState(false);
@@ -127,6 +129,7 @@ export default function Post({ post, getPosts }) {
         )}
       </div>
       <Heart likeInfo={likeInfo} />
+      <Comment commentCount={commentCount} post_id={post_id}/>
       {editPost ? (
         <input
           data-test="edit-input"

@@ -1,9 +1,9 @@
 import styled from 'styled-components';
 
-export const HeartStyled = styled.div`
+export const CommentStyled = styled.div`
   position: absolute;
   margin-left: 15px;
-  margin-top: 10px;
+  margin-top: 80px;
   justify-content: center;
   align-items: center;
   width: 30px;
@@ -15,30 +15,19 @@ export const HeartStyled = styled.div`
   div {
     margin: 0;
   }
-  .plike {
+  .pcomment {
     font-family: 'Lato';
     font-style: normal;
     font-weight: 400;
-    font-size: 11px;
+    font-size: 9px;
     line-height: 13px;
     text-align: center;
     color: #FFFFFF;
-    margin-top: 5px;
+    margin-top: 3px;
     white-space: nowrap;
     margin-left: auto; 
     margin-right: auto; 
-    margin-top: 3px; 
     cursor: default;
-  }
-  .box{
-    background: rgba(255, 255, 255, 0.9);
-    opacity:1;
-border-radius: 3px;
-    font-family: 'Lato';
-font-style: normal;
-font-weight: 700;
-font-size: 13px;
-line-height: 13px;
-color: #505050;
+    margin-left: -7px;
   }
 `;
