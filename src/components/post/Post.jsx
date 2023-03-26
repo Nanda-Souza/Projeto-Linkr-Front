@@ -9,6 +9,8 @@ import axios from "axios";
 import { AuthContext } from "../../contexts/authContext";
 import { ReactTagify } from "react-tagify";
 import { useNavigate } from "react-router";
+import apiPost from "../../services/apiPost";
+import CommentBox from "../commentList/CommentBox";
 
 export default function Post({ post, getPosts }) {
   const {
@@ -29,6 +31,9 @@ export default function Post({ post, getPosts }) {
   const [editPost, setEditPost] = useState(false);
   const [newComment, setNewComment] = useState("");
   const [isDisable, setIsDisable] = useState(false);
+  const [showDiv, setShowDiv] = useState(false);
+  const [comments, setComments] = useState([]);
+  const [commentNumber, setCommentNumber] = useState(commentCount);
 
   const { token } = useContext(AuthContext);
   const { user } = useContext(AuthContext);
@@ -38,6 +43,18 @@ export default function Post({ post, getPosts }) {
     fontWeight: "bold",
     cursor: "pointer",
   };
+
+  function thenFunc(res) {
+    setShowDiv(true);
+    setComments(res.data)
+    console.log(res.data)
+  }
+  function getComments() {
+    apiPost
+      .getCommentsReq(post_id, token)
+      .then(thenFunc)
+      .catch((e) => console.log(e));
+  }
 
   function editComment(post_id) {
     setNewComment("");
@@ -103,7 +120,7 @@ export default function Post({ post, getPosts }) {
     }
   }, [editPost]);
 
-  return (
+  return (<div>
     <PostStyled key={post_id} data-test="post">
       <div className="header_post">
         <div className="info">
@@ -130,7 +147,7 @@ export default function Post({ post, getPosts }) {
         )}
       </div>
       <Heart likeInfo={likeInfo} />
-      <Comment commentCount={commentCount} post_id={post_id}/>
+      <Comment onClick={getComments} commentCount={commentNumber} post_id={post_id}/>
       <Repost commentCount={commentCount} post_id={post_id}/>
       {editPost ? (
         <input
@@ -164,5 +181,7 @@ export default function Post({ post, getPosts }) {
         </LinkPost>
       </a>
     </PostStyled>
+    {showDiv && <CommentBox comments={comments} setCommentNumber={setCommentNumber}/>}
+    </div>
   );
 }
