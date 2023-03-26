@@ -3,6 +3,7 @@ import { BsPencil } from "react-icons/bs";
 import DeletePost from "../deletepost/DeletePost";
 import Heart from "../heart/Heart";
 import Comment from "../comment/Comment";
+import Repost from "../repost/Repost"
 import { useState, useContext, useRef, useEffect } from "react";
 import axios from "axios";
 import { AuthContext } from "../../contexts/authContext";
@@ -130,6 +131,7 @@ export default function Post({ post, getPosts }) {
       </div>
       <Heart likeInfo={likeInfo} />
       <Comment commentCount={commentCount} post_id={post_id}/>
+      <Repost commentCount={commentCount} post_id={post_id}/>
       {editPost ? (
         <input
           data-test="edit-input"
