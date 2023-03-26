@@ -88,7 +88,7 @@ export default function Heart(props) {
         className="plike"
         data-test="counter"
       >
-        {Number(likesNumber)} {Number(likesNumber) <= 1 ? "like" : "likes"}
+        {Number(likesNumber)} likes
       </p>
       <ReactTooltip
         className="box"
