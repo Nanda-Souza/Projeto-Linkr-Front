@@ -53,6 +53,10 @@ export const HeaderDiv = styled.div`
       height: auto;
       border-radius: 3px;
       padding: 3px;
+      font-family: "Lato";
+      font-size: 18px;
+      font-weight: 400;
+      color: #515151;
       li {
         display: flex;
         align-items: center;

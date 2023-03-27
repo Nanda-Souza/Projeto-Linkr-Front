@@ -11,7 +11,6 @@ function authToken(token) {
 }
 
 function singUp(body) {
-  console.log("url: " + BASE_URL);
   return axios.post(`${BASE_URL}/sign-up`, body);
 }
 

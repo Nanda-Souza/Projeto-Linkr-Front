@@ -50,6 +50,7 @@ export default function Header() {
     });
   }
 
+
   function navigateToUserPage(id) {
     navigate(`/user/${id}`);
     setIsSearching(false);

@@ -11,7 +11,7 @@ function authToken(token) {
 }
 
 function getPostsReq(token, lastPostId) {
-  
+  console.log("lastPostId: " + lastPostId);
   if (lastPostId)
     return axios.get(
       `${BASE_URL}/timeline?oldestPost=${lastPostId}?limit=10`,

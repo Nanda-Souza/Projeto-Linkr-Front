@@ -38,7 +38,6 @@ export default function Post({ post, getPosts }) {
   const [comments, setComments] = useState([]);
   const [commentNumber, setCommentNumber] = useState(Number(commentCount));
 
-
   const { token } = useContext(AuthContext);
   const { user } = useContext(AuthContext);
   const inputRef = useRef(null);
@@ -52,7 +51,6 @@ export default function Post({ post, getPosts }) {
     setShowDiv(true);
     setComments(res.data)
   }
-
   function getComments() {
     apiPost
       .getCommentsReq(post_id, token)

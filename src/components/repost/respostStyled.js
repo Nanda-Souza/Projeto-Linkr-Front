@@ -24,12 +24,12 @@ export const RepostStyled = styled.div`
     line-height: 13px;
     text-align: center;
     color: #FFFFFF;
-    margin-top: 8px;
+    margin-top: 3px;
     white-space: nowrap;
     margin-left: auto; 
     margin-right: auto; 
     cursor: default;
-    margin-left: -7px;
+    margin-left: 0px;
   }
 `;
 
