@@ -23,9 +23,12 @@ export default function Post({ post, getPosts }) {
     post_url,
     user_id,
     user_name,
+    is_repost,
+    original_post_id,
     user_img_url,
     likeInfo,
-    commentCount
+    commentCount,
+    shareCount
   } = post;
   const [comment, setComment] = useState(post_comment);
   const [editPost, setEditPost] = useState(false);
@@ -147,7 +150,7 @@ export default function Post({ post, getPosts }) {
       </div>
       <Heart likeInfo={likeInfo} />
       <Comment getComments={getComments} commentCount={commentNumber} post_id={post_id}/>
-      <Repost commentCount={commentCount} post_id={post_id}/>
+      <Repost shareCount={shareCount} post_id={post_id} post_url={post_url} is_repost={is_repost} original_post_id={original_post_id} getPosts={getPosts} post_description={post_description}/>
       {editPost ? (
         <input
           data-test="edit-input"
