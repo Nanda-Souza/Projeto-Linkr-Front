@@ -12,7 +12,13 @@ import {
 
 export default function Repost(props) {
     const { token } = useContext(AuthContext);    
-    const { post_id, shareCount } = props;
+    const { post_id,
+            post_url,
+            post_description, 
+            shareCount,
+            is_repost,
+            original_post_id,
+            getPosts } = props;
     const [shareNumber, setShareNumber] = useState(Number(shareCount));
     const [isOpen, setIsOpen] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
@@ -25,19 +31,19 @@ export default function Repost(props) {
   
     function sharePost() {
       setIsLoading(true);
-      //apiPost
-        //.deleteAPost(post_id, token)
-        //.then((res) => {
+      apiPost
+        .createPost(token, post_id, post_url, post_description, original_post_id)
+        .then((res) => {
           toggleModal();
           setIsLoading(false);
-          //getPosts();
-        //})
-        //.catch((err) => {
-          //console.log(err);
-          //setIsLoading(false);
-          //toggleModal();
-          //alert("It was not possible to delete the post");
-        //});
+          getPosts();
+        })
+        .catch((err) => {
+          console.log(err);
+          setIsLoading(false);
+          toggleModal();
+          alert("It was not possible to repost");
+        });
     }
   
 
@@ -66,7 +72,7 @@ export default function Repost(props) {
           <button data-test="cancel" className="cancel" onClick={toggleModal}>
             No, cancel!
           </button>
-          <button data-test="confirm" className="confirm" onClick={toggleModal}>
+          <button data-test="confirm" className="confirm" onClick={sharePost}>
             Yes,share!
           </button>
         </Buttons>
