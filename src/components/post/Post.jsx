@@ -33,7 +33,7 @@ export default function Post({ post, getPosts }) {
   const [isDisable, setIsDisable] = useState(false);
   const [showDiv, setShowDiv] = useState(false);
   const [comments, setComments] = useState([]);
-  const [commentNumber, setCommentNumber] = useState(commentCount);
+  const [commentNumber, setCommentNumber] = useState(Number(commentCount));
 
   const { token } = useContext(AuthContext);
   const { user } = useContext(AuthContext);
@@ -147,7 +147,7 @@ export default function Post({ post, getPosts }) {
         )}
       </div>
       <Heart likeInfo={likeInfo} />
-      <Comment onClick={getComments} commentCount={commentNumber} post_id={post_id}/>
+      <Comment getComments={getComments} commentCount={commentNumber} post_id={post_id}/>
       <Repost commentCount={commentCount} post_id={post_id}/>
       {editPost ? (
         <input

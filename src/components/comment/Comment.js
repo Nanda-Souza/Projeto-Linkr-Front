@@ -1,16 +1,14 @@
 
 import { AiOutlineComment } from "react-icons/ai";
-import { useState, useContext } from "react";
-import { AuthContext } from "../../contexts/authContext";
 import { CommentStyled } from "./commentStyled";
 
 export default function Comment(props) {
-  const { commentCount } = props;
+  const { commentCount, getComments } = props;
 
 
   return (
     <CommentStyled>
-      <div data-test="comment-btn" >
+      <div onClick={getComments} data-test="comment-btn" >
       <AiOutlineComment
   style={{ color: "white", fontSize: "22px", cursor: "pointer" }}
 />
