@@ -46,12 +46,23 @@ function deleteAPost(postId, token) {
 function getCommentsReq(postId, token) {
   return axios.get(`${BASE_URL}/comment/${Number(postId)}`, authToken(token));
 }
+
+function postCommentReq(comment, postId, token) {
+  return axios.post(
+    `${BASE_URL}/comment/${Number(postId)}`,
+      { comment },
+      authToken(token)
+    );
+  }
+
+
 export const apiPost = {
   likePostReq,
   deleteAPost,
   getPostsReq,
   getNewPostsReq,
-  getCommentsReq
+  getCommentsReq,
+  postCommentReq
 };
 
 export default apiPost;
