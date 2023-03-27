@@ -1,12 +1,10 @@
-import { ButtonFollow } from "./followButtonStyle";
+import { ButtonFollow, ButtonUnfollow } from "./followButtonStyle";
 import axios from "axios";
 import { useEffect, useState } from "react";
 
 export function Follow({id, token}){
     const [isFollowing, setIsFollowing] = useState(false)
-    const [follow, setFollow] = useState(undefined)
     const [disable, setDisable] = useState(false)
-    const [isLoading, setIsLoading] = useState(true);
 
     function followUser(){    
 
@@ -20,7 +18,6 @@ export function Follow({id, token}){
 
           setDisable(true)
           promise.then((res) => {
-            setFollow("Unfollow")
             setDisable(false)
             setIsFollowing(true)
           });
@@ -41,7 +38,6 @@ export function Follow({id, token}){
           const promise = axios.delete(URL, config);
           setDisable(true)
           promise.then((res) => {
-            setFollow("Follow")
             setDisable(false)
             setIsFollowing(false)
           });
@@ -59,13 +55,10 @@ export function Follow({id, token}){
           };
           const URL = `${process.env.REACT_APP_API_URL}/follow/${id}`;
           const promise = axios.get(URL, config);
-          setIsLoading(false);
           promise.then((res) => {        
-            if(res.data.length === 0){
-                setFollow("Follow")
+            if(res.data.length === 0){    
                 setIsFollowing(false)
             } else {
-                setFollow("Unfollow")
                 setIsFollowing(true)
             }
           });
@@ -80,13 +73,12 @@ export function Follow({id, token}){
         getFollow()
     }, [id])
 
-    if (isLoading || follow === undefined) {
-        return <div>Loading...</div>;
-      }
 
     return (
-        <>
-        <ButtonFollow data-test="follow-btn" disable={disable} onClick={isFollowing ? unfollowUser : followUser} follow={follow}>{follow}</ButtonFollow>
+        <> 
+        { isFollowing ?  <ButtonUnfollow data-test="follow-btn" disable={disable} onClick={unfollowUser}>Unfollow</ButtonUnfollow>
+        : <ButtonFollow data-test="follow-btn" disable={disable} onClick={followUser}>Follow</ButtonFollow> }     
+       
         </>
     )
 }
