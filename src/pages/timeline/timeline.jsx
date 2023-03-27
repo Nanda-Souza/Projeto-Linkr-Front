@@ -127,9 +127,7 @@ export default function TimelinePage() {
       .getNewPostsReq(token, lastPostId)
       .then((res) => {
         const newPosts = res.data.filter((post) => post.post_id > lastPostId);
-        if (newPosts.length === 0) {
-          console.log("No more posts to show");
-        } else {
+        if (newPosts.length > 0) {
           const newStandByPosts = [...newPosts, ...posts];
           setStandByPosts(newStandByPosts);
           setAwaitingPosts(newPosts.length);

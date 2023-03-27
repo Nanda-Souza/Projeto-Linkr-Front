@@ -37,7 +37,6 @@ export default function SignInPage() {
     apiAuth
       .signIn(body)
       .then((res) => {
-        console.log(res);
         login(res.data);
       })
       .catch((err) => {
