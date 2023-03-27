@@ -47,7 +47,6 @@ export default function Post({ post, getPosts }) {
   function thenFunc(res) {
     setShowDiv(true);
     setComments(res.data)
-    console.log(res.data)
   }
   function getComments() {
     apiPost
@@ -181,7 +180,7 @@ export default function Post({ post, getPosts }) {
         </LinkPost>
       </a>
     </PostStyled>
-    {showDiv && <CommentBox comments={comments} setCommentNumber={setCommentNumber}/>}
+    {showDiv && <CommentBox commentNumber={commentNumber} post_id={post_id} comments={comments} setComments={setComments} setCommentNumber={setCommentNumber}/>}
     </div>
   );
 }

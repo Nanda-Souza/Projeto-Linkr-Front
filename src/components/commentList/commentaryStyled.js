@@ -4,6 +4,16 @@ export const CommentStyled = styled.div`
 display:flex;
 border-bottom: 1px solid #353535;
 margin-top: 5px;
+height: 60px;
+.status{
+    font-family: 'Lato';
+font-style: normal;
+font-weight: 400;
+font-size: 14px;
+line-height: 17px;
+margin-left: 5px;
+color: #565656;
+}
 .cimg{
     width: 40px;
       height: 40px;
