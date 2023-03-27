@@ -15,7 +15,7 @@ margin-right: 0px;
 `
 
 export const ButtonUnfollow = styled.button`
-background-color: #FFFFFF;
+background-color: ${(props) => props.disabled ? "#A4ABAB" : "#FFFFFF"};
 width: 112px;
 height: 31px;
 border-radius: 5px;
