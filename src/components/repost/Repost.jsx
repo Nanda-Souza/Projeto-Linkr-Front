@@ -50,13 +50,14 @@ export default function Repost(props) {
   return (
     <>
     <RepostStyled>
-      <div onClick={toggleModal} >
+      <div onClick={toggleModal} data-test="repost-btn">
       <AiOutlineRetweet
   style={{ color: "white", fontSize: "22px", cursor: "pointer" }}
 />
       </div>
       <p 
         className="prepost"
+        data-test="repost-counter" 
       >
         {shareNumber} repost
       </p>
