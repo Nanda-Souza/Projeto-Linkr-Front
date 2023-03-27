@@ -11,7 +11,7 @@ function authToken(token) {
 }
 
 function getPostsReq(token, lastPostId) {
-  console.log("lastPostId: " + lastPostId);
+  
   if (lastPostId)
     return axios.get(
       `${BASE_URL}/timeline?oldestPost=${lastPostId}?limit=10`,
@@ -67,13 +67,22 @@ function createPost(token, post_id, post_url, post_description, original_post_id
 function getCommentsReq(postId, token) {
   return axios.get(`${BASE_URL}/comment/${Number(postId)}`, authToken(token));
 }
+
+function postCommentReq(comment, postId, token) {
+  return axios.post(
+    `${BASE_URL}/comment/${Number(postId)}`,
+      { comment },
+      authToken(token)
+    );
+  }
 export const apiPost = {
   likePostReq,
   deleteAPost,
   getPostsReq,
   getNewPostsReq,
   getCommentsReq,
-  createPost
+  createPost,
+  postCommentReq
 };
 
 export default apiPost;

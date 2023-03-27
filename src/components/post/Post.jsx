@@ -9,6 +9,8 @@ import axios from "axios";
 import { AuthContext } from "../../contexts/authContext";
 import { ReactTagify } from "react-tagify";
 import { useNavigate } from "react-router";
+import apiPost from "../../services/apiPost";
+import CommentBox from "../commentList/CommentBox";
 
 export default function Post({ post, getPosts }) {
   const {
@@ -32,7 +34,11 @@ export default function Post({ post, getPosts }) {
   const [editPost, setEditPost] = useState(false);
   const [newComment, setNewComment] = useState("");
   const [isDisable, setIsDisable] = useState(false);
-  
+  const [showDiv, setShowDiv] = useState(false);
+  const [comments, setComments] = useState([]);
+  const [commentNumber, setCommentNumber] = useState(Number(commentCount));
+
+
   const { token } = useContext(AuthContext);
   const { user } = useContext(AuthContext);
   const inputRef = useRef(null);
@@ -41,6 +47,18 @@ export default function Post({ post, getPosts }) {
     fontWeight: "bold",
     cursor: "pointer",
   };
+
+  function thenFunc(res) {
+    setShowDiv(true);
+    setComments(res.data)
+  }
+
+  function getComments() {
+    apiPost
+      .getCommentsReq(post_id, token)
+      .then(thenFunc)
+      .catch((e) => console.log(e));
+  }
 
   function editComment(post_id) {
     setNewComment("");
@@ -106,7 +124,7 @@ export default function Post({ post, getPosts }) {
     }
   }, [editPost]);
 
-  return (
+  return (<div>
     <PostStyled key={post_id} data-test="post">
       <div className="header_post">
         <div className="info">
@@ -133,7 +151,7 @@ export default function Post({ post, getPosts }) {
         )}
       </div>
       <Heart likeInfo={likeInfo} />
-      <Comment commentCount={commentCount} post_id={post_id}/>
+      <Comment getComments={getComments} commentCount={commentNumber} post_id={post_id}/>
       <Repost shareCount={shareCount} post_id={post_id} post_url={post_url} is_repost={is_repost} original_post_id={original_post_id} getPosts={getPosts} post_description={post_description}/>
       {editPost ? (
         <input
@@ -167,5 +185,7 @@ export default function Post({ post, getPosts }) {
         </LinkPost>
       </a>
     </PostStyled>
+    {showDiv && <CommentBox commentNumber={commentNumber} post_id={post_id} comments={comments} setComments={setComments} setCommentNumber={setCommentNumber}/>}
+    </div>
   );
 }
