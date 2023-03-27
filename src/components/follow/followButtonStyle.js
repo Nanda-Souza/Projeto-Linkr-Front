@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const ButtonFollow = styled.button`
-background-color: #1877F2;
+background-color: ${(props) => props.disabled ? "#A4ABAB" : "#1877F2"};
 width: 112px;
 height: 31px;
 border-radius: 5px;
